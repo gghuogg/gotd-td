@@ -58,7 +58,7 @@ func (c *Conn) newEncryptedMessage(id int64, seq int32, payload bin.Encoder, b *
 			}
 		}
 	}
-
+	// {"v": "v0.83.0", "conn_id": 0, "dc_id": 2, "type_id": "0x58e4a740", "type_name": "rpc_drop_answer#58e4a740", "msg_id": 7295547534260920588}
 	log.Debug("Request", zap.Int64("msg_id", id))
 	if err := c.cipher.Encrypt(s.Key, d, b); err != nil {
 		return errors.Wrap(err, "encrypt")

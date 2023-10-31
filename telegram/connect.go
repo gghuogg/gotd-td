@@ -2,6 +2,7 @@ package telegram
 
 import (
 	"context"
+	"log"
 	"time"
 
 	"github.com/cenkalti/backoff/v4"
@@ -99,6 +100,7 @@ func (c *Client) resetReady() {
 // See `examples/bg-run` and `contrib/gb` package for classic approach without
 // explicit callback, with Connect and defer close().
 func (c *Client) Run(ctx context.Context, f func(ctx context.Context) error) (err error) {
+	log.Println("client开始运行")
 	if c.ctx != nil {
 		select {
 		case <-c.ctx.Done():
@@ -107,10 +109,12 @@ func (c *Client) Run(ctx context.Context, f func(ctx context.Context) error) (er
 		}
 	}
 
+	log.Println("开始设置client的context")
 	// Setting up client context for background operations like updates
 	// handling or pool creation.
 	c.ctx, c.cancel = context.WithCancel(ctx)
 
+	log.Println("开始运行clienting")
 	c.log.Info("Starting")
 	defer c.log.Info("Closed")
 	// Cancel client on exit.
@@ -126,11 +130,13 @@ func (c *Client) Run(ctx context.Context, f func(ctx context.Context) error) (er
 		}
 	}()
 
+	log.Println("client 重新设置")
 	c.resetReady()
 	if err := c.restoreConnection(ctx); err != nil {
 		return err
 	}
 
+	log.Println("tdsync.NewCancellableGroup")
 	g := tdsync.NewCancellableGroup(ctx)
 	g.Go(c.reconnectUntilClosed)
 	g.Go(func(ctx context.Context) error {
@@ -142,6 +148,8 @@ func (c *Client) Run(ctx context.Context, f func(ctx context.Context) error) (er
 			return c.ctx.Err()
 		}
 	})
+
+	log.Println("g.Go(func(ctx context.Context) error")
 	g.Go(func(ctx context.Context) error {
 		select {
 		case <-ctx.Done():
@@ -160,6 +168,6 @@ func (c *Client) Run(ctx context.Context, f func(ctx context.Context) error) (er
 	if err := g.Wait(); !errors.Is(err, context.Canceled) {
 		return err
 	}
-
+	log.Println("client运行完毕")
 	return nil
 }

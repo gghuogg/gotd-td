@@ -23,11 +23,21 @@ func Prod() List {
 				IPAddress: "2001:0b28:f23d:f001:0000:0000:0000:000a",
 				Port:      443,
 			},
+
+
 			{
 				ID:        2,
 				IPAddress: "localhost",
 				Port:      10443,
 			},
+			//{
+			//	Ipv6:      true,
+			//	ID:        2,
+			//	IPAddress: " ::1",
+			//	Port:      10443,
+			//},
+
+
 			//{
 			//	ID:        2,
 			//	IPAddress: "149.154.167.50",

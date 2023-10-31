@@ -2,6 +2,7 @@ package tgtest
 
 import (
 	"github.com/go-faster/errors"
+	"log"
 
 	"github.com/gotd/td/bin"
 	"github.com/gotd/td/tg"
@@ -14,8 +15,11 @@ import (
 //	tg.InitConnectionRequest
 //	tg.InvokeWithoutUpdatesRequest
 func UnpackInvoke(next Handler) Handler {
+	log.Println("消息進行Handler處理")
 	return HandlerFunc(func(srv *Server, req *Request) error {
+		log.Println("HandlerFunc handleing")
 		id, err := req.Buf.PeekID()
+		log.Println("req.Buf.PeekID")
 		if err != nil {
 			return err
 		}
@@ -28,21 +32,25 @@ func UnpackInvoke(next Handler) Handler {
 		for {
 			switch id {
 			case tg.InvokeWithLayerRequestTypeID:
+				log.Println("tg.InvokeWithLayerRequestTypeID")
 				r = &tg.InvokeWithLayerRequest{
 					Query: &obj,
 				}
 				// TODO(tdakkota): pass Layer to session.
 			case tg.InitConnectionRequestTypeID:
+				log.Println("tg.InitConnectionRequestTypeID")
 				r = &tg.InitConnectionRequest{
 					Query: &obj,
 				}
 				// TODO(tdakkota): pass DeviceInfo to session.
 			case tg.InvokeWithoutUpdatesRequestTypeID:
+				log.Println("tg.InvokeWithoutUpdatesRequestTypeID")
 				r = &tg.InvokeWithoutUpdatesRequest{
 					Query: &obj,
 				}
 				// TODO(tdakkota): pass NoUpdates flag to session.
 			default:
+				log.Println("default Handler next.OnMessage")
 				return next.OnMessage(srv, req)
 			}
 

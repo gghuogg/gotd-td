@@ -3,6 +3,7 @@ package exchange
 import (
 	"context"
 	"crypto/rand"
+	"log"
 	"math/big"
 
 	"github.com/go-faster/errors"
@@ -16,6 +17,7 @@ import (
 
 // Run runs client-side flow.
 func (c ClientExchange) Run(ctx context.Context) (ClientExchangeResult, error) {
+	log.Println("交换初始化")
 	// 1. DH exchange initiation.
 	nonce, err := crypto.RandInt128(c.rand)
 	if err != nil {
@@ -28,6 +30,7 @@ func (c ClientExchange) Run(ctx context.Context) (ClientExchangeResult, error) {
 		return ClientExchangeResult{}, errors.Wrap(err, "write ReqPqMultiRequest")
 	}
 
+	log.Println("服务器发送表单的响应")
 	// 2. Server sends response of the form
 	// resPQ#05162463 nonce:int128 server_nonce:int128 pq:string server_public_key_fingerprints:Vector long = ResPQ;
 	var res mt.ResPQ
@@ -40,6 +43,7 @@ func (c ClientExchange) Run(ctx context.Context) (ClientExchangeResult, error) {
 	}
 	serverNonce := res.ServerNonce
 
+	log.Println("打印ClientExchange的KEY",c.keys[0].Fingerprint())
 	// Selecting first public key that match fingerprint.
 	var selectedPubKey PublicKey
 Loop:
@@ -67,6 +71,8 @@ Loop:
 	}
 
 	start := c.clock.Now()
+
+	log.Println("客户端将pq分解为素数，使得p<q。")
 	// 3. Client decomposes pq into prime factors such that p < q.
 	// Performing proof of work.
 	p, q, err := crypto.DecomposePQ(pq, c.rand)
@@ -78,6 +84,7 @@ Loop:
 	pBytes := p.Bytes()
 	qBytes := q.Bytes()
 
+	log.Println("客户端将查询发送到服务器")
 	// 4. Client sends query to server.
 	// req_DH_params#d712e4be nonce:int128 server_nonce:int128 p:string q:string
 	//   public_key_fingerprint:long encrypted_data:string = Server_DH_Params
@@ -122,6 +129,7 @@ Loop:
 		return ClientExchangeResult{}, errors.Wrap(err, "write ReqDHParamsRequest")
 	}
 
+	log.Println("服务器使用Server_DH_Params进行响应")
 	// 5. Server responds with Server_DH_Params.
 	if err := c.conn.Recv(ctx, b); err != nil {
 		return ClientExchangeResult{}, errors.Wrap(err, "read ServerDHParams message")
@@ -174,6 +182,7 @@ Loop:
 		}
 		gA := big.NewInt(0).SetBytes(innerData.GA)
 
+		log.Println("计算随机数b")
 		// 6. Random number b is computed:
 		randMax := big.NewInt(0).SetBit(big.NewInt(0), crypto.RSAKeyBits, 1)
 		bParam, err := rand.Int(c.rand, randMax)
@@ -214,6 +223,7 @@ Loop:
 			return ClientExchangeResult{}, errors.Wrap(err, "write SetClientDHParamsRequest")
 		}
 
+		log.Println("使用公式（g_a）^b mod dh_prime计算auth_key")
 		// 7. Computing auth_key using formula (g_a)^b mod dh_prime
 		authKey := big.NewInt(0).Exp(gA, bParam, dhPrime)
 

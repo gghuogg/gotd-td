@@ -47,10 +47,12 @@ func main()  {
 		}
 
 		var b bin.Buffer
+		fmt.Println("接收消息")
 		if err := conn.Recv(ctx, &b); err != nil {
 			return errors.Wrap(err, "recv")
 		}
 
+		fmt.Println("发送消息")
 		if err := conn.Send(ctx, &b); err != nil {
 			return errors.Wrap(err, "send")
 		}
@@ -65,9 +67,11 @@ func main()  {
 	}
 
 	data, err := io.ReadAll(io.LimitReader(rand.Reader, 1024))
-	fmt.Println(string(data))
+	fmt.Println("发送的消息",string(data))
 	conn.Send(ctx, &bin.Buffer{Buf: data})
 
+
+	fmt.Println("消息进行接收")
 	var b bin.Buffer
 	conn.Recv(ctx, &b)
 

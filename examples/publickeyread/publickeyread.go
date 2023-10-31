@@ -6,6 +6,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
+	"github.com/go-faster/errors"
 	"io/ioutil"
 	"log"
 	"os"
@@ -59,10 +60,20 @@ eQnhbTFuwG958vSX1zJOqkDkXlue/1XeMQIDAQAB
 
 func generateRSAKey() {
 	// 声明位数
-	var bits = 1024
+	var bits = 2048
 
 	// 使用随机数据生成器random生成一对具有指定位数的RSA密钥
 	privateKey, err := rsa.GenerateKey(rand.Reader, bits)
+	fmt.Println(privateKey)
+
+
+	//privateKeyEncoded, err := os.ReadFile(".\\teled-main\\_testdata\\test.key.pem")
+	//if err != nil {
+	//	fmt.Println(err)
+	//}
+	//log.Println("进行私钥编码")
+	//privatekey, err := ParsePrivateKey(privateKeyEncoded)
+
 
 	// 使用指定的位数生成一对多质数的RSA密钥。(质数定义为在大于1的自然数中，除了1和它本身以外不再有其他因数)
 	// 虽然公钥可以和二质数情况下的公钥兼容（事实上，不能区分两种公钥），私钥却不行。
@@ -74,10 +85,11 @@ func generateRSAKey() {
 
 	// 将rsa私钥序列化为ASN.1 PKCS#1 DER编码
 	derPrivate := x509.MarshalPKCS1PrivateKey(privateKey)
+	fmt.Println(string(derPrivate))
 
 	// 初始化一个PEM编码的结构
 	priBlock := &pem.Block{
-		Type:  "PRIVATE KEY",
+		Type:  "RSA PRIVATE KEY",
 		Bytes: derPrivate,
 	}
 
@@ -103,7 +115,7 @@ func generateRSAKey() {
 
 	// 初始化一个PEM编码的结构
 	priBlock8 := &pem.Block{
-		Type:  "PRIVATE KEY",
+		Type:  "RSA PRIVATE KEY",
 		Bytes: derPrivate8,
 	}
 
@@ -133,7 +145,7 @@ func generateRSAKey() {
 
 	// 初始化一个PEM编码的结构
 	pubBlock := &pem.Block{
-		Type:  "PUBLIC KEY",
+		Type:  "RSA PUBLIC KEY",
 		Bytes: derPublic,
 	}
 
@@ -157,7 +169,7 @@ func generateRSAKey() {
 
 	// 初始化一个PEM编码的结构
 	pubBlock1 := &pem.Block{
-		Type:  "PUBLIC KEY",
+		Type:  "RSA PUBLIC KEY",
 		Bytes: derPublic1,
 	}
 
@@ -315,3 +327,20 @@ func getRSAKey() (privateKey []byte, publicKey []byte, err error) {
 //	}
 //	fmt.Println("RSA-PASS签名验证成功")
 //}
+
+
+
+// ParsePrivateKey parses PEM encoded private key.
+func ParsePrivateKey(data []byte) (*rsa.PrivateKey, error) {
+	block, _ := pem.Decode(data)
+	if block.Type != "RSA PRIVATE KEY" {
+		return nil, errors.Errorf("unsupported key type: %q", block.Type)
+	}
+
+	k, err := x509.ParsePKCS1PrivateKey(block.Bytes)
+	if err != nil {
+		return nil, errors.Wrap(err, "PKCS1")
+	}
+
+	return k, nil
+}

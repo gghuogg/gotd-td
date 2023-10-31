@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/rsa"
 	"io"
+	"log"
 	"net"
 	"time"
 
@@ -90,13 +91,17 @@ func (s *Server) Serve(ctx context.Context, l transport.Listener) error {
 
 func (s *Server) serve(ctx context.Context, l transport.Listener) error {
 	s.log.Info("Serving")
+	log.Println("Serving")
 	defer func() {
 		s.log.Info("Stopping")
+		log.Println("Soppint")
 	}()
 
+	log.Println("NewCancellanbleGroup")
 	grp := tdsync.NewCancellableGroup(ctx)
 	grp.Go(func(context.Context) error {
 		for {
+			log.Println("conn Accept")
 			conn, err := l.Accept()
 			if err != nil {
 				if errors.Is(err, net.ErrClosed) {
@@ -105,6 +110,7 @@ func (s *Server) serve(ctx context.Context, l transport.Listener) error {
 				return errors.Wrap(err, "accept")
 			}
 
+			log.Println("grp.Go ")
 			grp.Go(func(ctx context.Context) error {
 				if err := s.serveConn(ctx, conn); err != nil {
 					// Client disconnected.

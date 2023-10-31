@@ -2,6 +2,7 @@ package tgtest
 
 import (
 	"context"
+	"log"
 
 	"github.com/go-faster/errors"
 
@@ -44,6 +45,7 @@ func (e exchangeConn) Recv(ctx context.Context, b *bin.Buffer) error {
 
 // exchange starts MTProto key exchange.
 func (s *Server) exchange(ctx context.Context, conn transport.Conn) (crypto.AuthKey, error) {
+	log.Println("开始 MTProto 密钥交换")
 	r, err := exchange.NewExchanger(conn, s.dcID).
 		WithClock(s.clock).
 		WithLogger(s.log.Named("exchange")).

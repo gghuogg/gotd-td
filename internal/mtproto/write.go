@@ -2,7 +2,6 @@ package mtproto
 
 import (
 	"context"
-
 	"github.com/gotd/td/bin"
 )
 
@@ -29,7 +28,8 @@ func (c *Conn) write(ctx context.Context, msgID int64, seqNo int32, message bin.
 	if err := c.newEncryptedMessage(msgID, seqNo, message, b); err != nil {
 		return err
 	}
-
+	//paddingint,vstring,errerror := bin.DecodeString(b.Copy())
+	//log.Println("paddingint,vstring,errerror",paddingint,vstring,errerror)
 	if err := c.conn.Send(ctx, b); err != nil {
 		return err
 	}

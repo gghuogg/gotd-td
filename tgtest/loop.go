@@ -55,11 +55,14 @@ func (s *Server) serveConn(ctx context.Context, conn transport.Conn) error {
 		}
 
 		log.Println("读取authKeyID")
+		//bstring,err := b.String()
+		//log.Println("打印b",bstring,err)
 		var authKeyID [8]byte
 		if err := b.PeekN(authKeyID[:], len(authKeyID)); err != nil {
 			return errors.Wrap(err, "peek id")
 		}
 
+		log.Println("打印authKeyID",authKeyID,len(authKeyID))
 		log.Println("通过authKeyID来获取用户的session")
 		// TODO(tdakkota): dispatch by type ID instead?
 		if _, ok := s.users.getSession(authKeyID); ok {
@@ -73,7 +76,9 @@ func (s *Server) serveConn(ctx context.Context, conn transport.Conn) error {
 		log.Println("如果authKeyID为空或者是0，发送CodeAuthKeyNotFound")
 		// If authKeyID not found and is not zero, so send protocol error.
 		if authKeyID != [8]byte{} {
+			log.Println("authKeyID没有发现,authKeyID的大小为",len(authKeyID),)
 			if err := s.sendProtoError(ctx, conn, codec.CodeAuthKeyNotFound); err != nil {
+				log.Println("send AuthKeyNotFound")
 				return errors.Wrap(err, "send AuthKeyNotFound")
 			}
 			continue

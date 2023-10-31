@@ -47,7 +47,7 @@ func newRoot(a *application) *cobra.Command {
 				return errors.Wrap(err, "failed to listen")
 			}
 			opt := tgtest.ServerOptions{
-				DC:     1,
+				DC:     2,
 				Logger: a.lg,
 			}
 			a.lg.Info("Listening",
@@ -63,9 +63,9 @@ func newRoot(a *application) *cobra.Command {
 	{
 		log.Println("命令行解析，参数设置")
 		f := rootCmd.Flags()
-		f.StringVar(&a.Host, "host", "localhost", "Hostname of the server")
+		f.StringVar(&a.Host, "host", "127.0.0.1", "Hostname of the server")
 		f.IntVar(&a.Port, "port", 10443, "Port of the server")
-		f.StringVar(&a.PrivateKeyPath, "key", ".\\_testdata\\test.key.pem", "Path to PEM-encoded private key")
+		f.StringVar(&a.PrivateKeyPath, "key", ".\\publickeyread\\rsa_private_pkcs1.pem", "Path to PEM-encoded private key")
 
 		markFlagsRequired(f, "key")
 	}
