@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/go-faster/jx"
+	"github.com/gotd/td/bin"
 	"github.com/gotd/td/telegram/tljson"
 	"github.com/gotd/td/tg"
 	"go.uber.org/zap"
@@ -124,7 +125,29 @@ func (a *application) messagesGetAvailableReactions(ctx context.Context, hash in
 }
 
 func (a *application) messagesGetStickerSet(ctx context.Context, req *tg.MessagesGetStickerSetRequest) (tg.MessagesStickerSetClass, error) {
-	return &tg.MessagesStickerSet{}, nil
+	return &tg.MessagesStickerSet{
+		Set: struct {
+			Flags           bin.Fields
+			Archived        bool
+			Official        bool
+			Masks           bool
+			Animated        bool
+			Videos          bool
+			Emojis          bool
+			InstalledDate   int
+			ID              int64
+			AccessHash      int64
+			Title           string
+			ShortName       string
+			Thumbs          []tg.PhotoSizeClass
+			ThumbDCID       int
+			ThumbVersion    int
+			ThumbDocumentID int64
+			Count           int
+			Hash            int
+		}{ Archived: true, Official: true, InstalledDate: 333444, ID: 333444, AccessHash: 333444, Title: "333444", ShortName: "333444",
+			ThumbDCID: 3344, ThumbVersion: 3344, ThumbDocumentID: 3344, Count: 3344, Hash: 3344},
+	}, nil
 }
 
 func (a *application) helpGetTermsOfServiceUpdate(ctx context.Context) (tg.HelpTermsOfServiceUpdateClass, error) {
@@ -149,23 +172,49 @@ func (a *application) usersGetFullUser(ctx context.Context, id tg.InputUserClass
 }
 
 func (a *application) accountGetNotifySettings(ctx context.Context, peer tg.InputNotifyPeerClass) (*tg.PeerNotifySettings, error) {
-	return &tg.PeerNotifySettings{}, nil
+	return &tg.PeerNotifySettings{
+		ShowPreviews: true,
+		Silent: true,
+		MuteUntil: 333444,
+	}, nil
 }
 
 func (a *application) accountGetGlobalPrivacySettings(ctx context.Context) (*tg.GlobalPrivacySettings, error) {
-	return &tg.GlobalPrivacySettings{}, nil
+	return &tg.GlobalPrivacySettings{
+		ArchiveAndMuteNewNoncontactPeers: true,
+		KeepArchivedFolders: true,
+		KeepArchivedUnmuted: true,
+	}, nil
 }
 
 func (a *application) messagesGetAttachMenuBots(ctx context.Context, hash int64) (tg.AttachMenuBotsClass, error) {
-	return &tg.AttachMenuBots{}, nil
+	return &tg.AttachMenuBots{
+		Hash: 333444,
+	}, nil
 }
 
 func (a *application) messagesGetDialogs(ctx context.Context, request *tg.MessagesGetDialogsRequest) (tg.MessagesDialogsClass, error) {
-	return &tg.MessagesDialogs{}, nil
+	return &tg.MessagesDialogs{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "theLostLamb",
+				Phone: "theLostLamb3344",
+				Bot: true,
+			},
+		},
+	}, nil
 }
 
 func (a *application) messagesGetPinnedDialogs(ctx context.Context, folderid int) (*tg.MessagesPeerDialogs, error) {
-	return &tg.MessagesPeerDialogs{}, nil
+	return &tg.MessagesPeerDialogs{
+		State: struct {
+			Pts         int
+			Qts         int
+			Date        int
+			Seq         int
+			UnreadCount int
+		}{Pts: 3344, Qts: 3344, Date: 3344, Seq: 3344, UnreadCount:3344 },
+	}, nil
 }
 
 func (a *application) helpGetPremiumPromo(ctx context.Context) (*tg.HelpPremiumPromo, error) {
@@ -179,15 +228,22 @@ func (a *application) messagesGetStickers(ctx context.Context, request *tg.Messa
 }
 
 func (a *application) helpGetPromoData(ctx context.Context) (tg.HelpPromoDataClass, error) {
-	return &tg.HelpPromoDataEmpty{}, nil
+	return &tg.HelpPromoDataEmpty{
+		Expires: 3344,
+	}, nil
 }
 
 func (a *application) updatesGetDifference(ctx context.Context, req *tg.UpdatesGetDifferenceRequest) (tg.UpdatesDifferenceClass, error) {
-	return &tg.UpdatesDifferenceEmpty{}, nil
+	return &tg.UpdatesDifferenceEmpty{
+		Date: 3344,
+		Seq: 3344,
+	}, nil
 }
 
 func (a *application) contactsGetContacts(ctx context.Context, hash int64) (tg.ContactsContactsClass, error) {
-	return &tg.ContactsContacts{}, nil
+	return &tg.ContactsContacts{
+		SavedCount: 333444,
+	}, nil
 }
 
 func (a *application) helpDismissSuggestion(ctx context.Context, request *tg.HelpDismissSuggestionRequest) (bool, error) {
@@ -199,7 +255,15 @@ func (a *application) helpAcceptTermsOfService(ctx context.Context, id tg.DataJS
 }
 
 func (a *application) messagesGetPeerDialogs(ctx context.Context, peers []tg.InputDialogPeerClass) (*tg.MessagesPeerDialogs, error) {
-	return &tg.MessagesPeerDialogs{}, nil
+	return &tg.MessagesPeerDialogs{
+		State: struct {
+			Pts         int
+			Qts         int
+			Date        int
+			Seq         int
+			UnreadCount int
+		}{Pts: 3344, Qts: 3344, Date: 3344, Seq: 3344, UnreadCount: 3344},
+	}, nil
 }
 
 func (a *application) contactsResolveUsername(ctx context.Context, username string) (*tg.ContactsResolvedPeer, error) {
@@ -223,5 +287,9 @@ func (a *application) contactsResolveUsername(ctx context.Context, username stri
 }
 
 func (a *application) channelsGetMessages(ctx context.Context, request *tg.ChannelsGetMessagesRequest) (tg.MessagesMessagesClass, error) {
-	return &tg.MessagesChannelMessages{}, nil
+	return &tg.MessagesChannelMessages{
+		Inexact: true,
+		Pts: 333444,
+		Count: 333444,
+	}, nil
 }

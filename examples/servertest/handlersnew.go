@@ -145,19 +145,28 @@ func (a *application) authDropTempAuthKeys(ctx context.Context, exceptauthkeys [
 
 // OnAuthExportLoginToken(f func(ctx context.Context, request *AuthExportLoginTokenRequest) (AuthLoginTokenClass, error)) {
 func (a *application) authExportLoginToke(ctx context.Context, request *tg.AuthExportLoginTokenRequest) (tg.AuthLoginTokenClass, error) {
-    return &tg.AuthLoginToken{}, nil
+    return &tg.AuthLoginToken{
+    	Expires: 333444,
+	}, nil
 }
 
 
 // OnAuthImportLoginToken(f func(ctx context.Context, token []byte) (AuthLoginTokenClass, error)) {
 func (a *application) authImportLoginToke(ctx context.Context, token []byte) (tg.AuthLoginTokenClass, error) {
-    return &tg.AuthLoginToken{}, nil
+    return &tg.AuthLoginToken{
+    	Expires: 333444,
+	}, nil
 }
 
 
 // OnAuthAcceptLoginToken(f func(ctx context.Context, token []byte) (*Authorization, error)) {
 func (a *application) authAcceptLoginToke(ctx context.Context, token []byte) (*tg.Authorization, error) {
-    return &tg.Authorization{}, nil
+    return &tg.Authorization{
+    	Hash: 333444,
+    	APIID: 444333,
+    	AppName: "333444",
+    	AppVersion: "444333",
+	}, nil
 }
 
 
@@ -281,14 +290,26 @@ func (a *application) accountUpdateUsername(ctx context.Context, username string
 // OnAccountGetPrivacy(f func(ctx context.Context, key InputPrivacyKeyClass) (*AccountPrivacyRules, error)) {
 func (a *application) accountGetPrivacy(ctx context.Context, key tg.InputPrivacyKeyClass) (*tg.AccountPrivacyRules, error) {
     return &tg.AccountPrivacyRules{
-
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
 	}, nil
 }
 
 
 // OnAccountSetPrivacy(f func(ctx context.Context, request *AccountSetPrivacyRequest) (*AccountPrivacyRules, error)) {
 func (a *application) accountSetPrivacy(ctx context.Context, request *tg.AccountSetPrivacyRequest) (*tg.AccountPrivacyRules, error) {
-    return &tg.AccountPrivacyRules{}, nil
+    return &tg.AccountPrivacyRules{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -494,19 +515,22 @@ func (a *application) accountVerifyPhone(ctx context.Context, request *tg.Accoun
 
 // OnAccountSendVerifyEmailCode(f func(ctx context.Context, request *AccountSendVerifyEmailCodeRequest) (*AccountSentEmailCode, error)) {
 func (a *application) accountSendVerifyEmailCode(ctx context.Context, request *tg.AccountSendVerifyEmailCodeRequest) (*tg.AccountSentEmailCode, error) {
-    return &tg.AccountSentEmailCode{}, nil
+    return &tg.AccountSentEmailCode{
+    	EmailPattern: "333444",
+    	Length: 444333,
+	}, nil
 }
 
 
 // OnAccountVerifyEmail(f func(ctx context.Context, request *AccountVerifyEmailRequest) (AccountEmailVerifiedClass, error)) {
 func (a *application) accountVerifyEmail(ctx context.Context, request *tg.AccountVerifyEmailRequest) (tg.AccountEmailVerifiedClass, error) {
-    return &tg.AccountEmailVerified{}, nil
+    return &tg.AccountEmailVerified{Email: "4443333"}, nil
 }
 
 
 // OnAccountInitTakeoutSession(f func(ctx context.Context, request *AccountInitTakeoutSessionRequest) (*AccountTakeout, error)) {
 func (a *application) accountInitTakeoutSessio(ctx context.Context, request *tg.AccountInitTakeoutSessionRequest) (*tg.AccountTakeout, error) {
-    return &tg.AccountTakeout{}, nil
+    return &tg.AccountTakeout{ID: 333444}, nil
 }
 
 
@@ -557,13 +581,21 @@ func (a *application) accountGetNotifyExceptions(ctx context.Context, request *t
 
 // OnAccountGetWallPaper(f func(ctx context.Context, wallpaper InputWallPaperClass) (WallPaperClass, error)) {
 func (a *application) accountGetWallPaper(ctx context.Context, wallpaper tg.InputWallPaperClass) (tg.WallPaperClass, error) {
-    return &tg.WallPaper{}, nil
+    return &tg.WallPaper{
+		Dark: true,
+		AccessHash: 33444,
+		Slug: "444333",
+	}, nil
 }
 
 
 // OnAccountUploadWallPaper(f func(ctx context.Context, request *AccountUploadWallPaperRequest) (WallPaperClass, error)) {
 func (a *application) accountUploadWallPaper(ctx context.Context, request *tg.AccountUploadWallPaperRequest) (tg.WallPaperClass, error) {
-    return &tg.WallPaper{}, nil
+    return &tg.WallPaper{
+    	Dark: true,
+    	AccessHash: 33444,
+    	Slug: "444333",
+	}, nil
 }
 
 
@@ -587,7 +619,22 @@ func (a *application) accountResetWallPapers(ctx context.Context) (bool, error) 
 
 // OnAccountGetAutoDownloadSettings(f func(ctx context.Context) (*AccountAutoDownloadSettings, error)) {
 func (a *application) accountGetAutoDownloadSettings(ctx context.Context) (*tg.AccountAutoDownloadSettings, error) {
-    return &tg.AccountAutoDownloadSettings{}, nil
+    return &tg.AccountAutoDownloadSettings{
+    	Low: struct {
+			Flags                         bin.Fields
+			Disabled                      bool
+			VideoPreloadLarge             bool
+			AudioPreloadNext              bool
+			PhonecallsLessData            bool
+			StoriesPreload                bool
+			PhotoSizeMax                  int
+			VideoSizeMax                  int64
+			FileSizeMax                   int64
+			VideoUploadMaxbitrate         int
+			SmallQueueActiveOperationsMax int
+			LargeQueueActiveOperationsMax int
+		}{ Disabled: true, VideoPreloadLarge: true, PhotoSizeMax: 3344, VideoSizeMax: 4433, FileSizeMax: 3434, },
+	}, nil
 }
 
 
@@ -599,19 +646,30 @@ func (a *application) accountSaveAutoDownloadSettings(ctx context.Context, reque
 
 // OnAccountUploadTheme(f func(ctx context.Context, request *AccountUploadThemeRequest) (DocumentClass, error)) {
 func (a *application) accountUploadTheme(ctx context.Context, request *tg.AccountUploadThemeRequest) (tg.DocumentClass, error) {
-    return &tg.Document{}, nil
+    return &tg.Document{
+		ID: 333444,
+		MimeType: "444333",
+	}, nil
 }
 
 
 // OnAccountCreateTheme(f func(ctx context.Context, request *AccountCreateThemeRequest) (*Theme, error)) {
 func (a *application) accountCreateTheme(ctx context.Context, request *tg.AccountCreateThemeRequest) (*tg.Theme, error) {
-    return &tg.Theme{}, nil
+	return &tg.Theme{
+		Default: true,
+		ID: 33344,
+		Title: "3334444",
+	}, nil
 }
 
 
 // OnAccountUpdateTheme(f func(ctx context.Context, request *AccountUpdateThemeRequest) (*Theme, error)) {
 func (a *application) accountUpdateTheme(ctx context.Context, request *tg.AccountUpdateThemeRequest) (*tg.Theme, error) {
-    return &tg.Theme{}, nil
+	return &tg.Theme{
+		Default: true,
+		ID: 33344,
+		Title: "3334444",
+	}, nil
 }
 
 
@@ -629,13 +687,19 @@ func (a *application) accountInstallTheme(ctx context.Context, request *tg.Accou
 
 // OnAccountGetTheme(f func(ctx context.Context, request *AccountGetThemeRequest) (*Theme, error)) {
 func (a *application) accountGetTheme(ctx context.Context, request *tg.AccountGetThemeRequest) (*tg.Theme, error) {
-    return &tg.Theme{}, nil
+    return &tg.Theme{
+    	Default: true,
+    	ID: 33344,
+    	Title: "3334444",
+	}, nil
 }
 
 
 // OnAccountGetThemes(f func(ctx context.Context, request *AccountGetThemesRequest) (AccountThemesClass, error)) {
 func (a *application) accountGetThemes(ctx context.Context, request *tg.AccountGetThemesRequest) (tg.AccountThemesClass, error) {
-    return &tg.AccountThemes{}, nil
+    return &tg.AccountThemes{
+    	Hash: 333444,
+	}, nil
 }
 
 
@@ -647,26 +711,39 @@ func (a *application) accountSetContentSettings(ctx context.Context, request *tg
 
 // OnAccountGetContentSettings(f func(ctx context.Context) (*AccountContentSettings, error)) {
 func (a *application) accountGetContentSettings(ctx context.Context) (*tg.AccountContentSettings, error) {
-    return &tg.AccountContentSettings{}, nil
+    return &tg.AccountContentSettings{
+    	SensitiveCanChange: true,
+    	SensitiveEnabled: true,
+	}, nil
 }
 
 
 // OnAccountGetMultiWallPapers(f func(ctx context.Context, wallpapers []InputWallPaperClass) ([]WallPaperClass, error)) {
 func (a *application) accountGetMultiWallPapers(ctx context.Context, wallpapers []tg.InputWallPaperClass) ([]tg.WallPaperClass, error) {
-    //return []tg.WallPaper{}, nil
-	return nil,nil
+	return []tg.WallPaperClass{
+		&tg.WallPaper{
+			ID: 333444,
+			Slug: "444333",
+		},
+	},nil
 }
 
 
 // OnAccountGetGlobalPrivacySettings(f func(ctx context.Context) (*GlobalPrivacySettings, error)) {
 func (a *application) accountGetGlobalPrivacySettingsbak(ctx context.Context) (*tg.GlobalPrivacySettings, error) {
-    return &tg.GlobalPrivacySettings{}, nil
+    return &tg.GlobalPrivacySettings{
+		KeepArchivedUnmuted: true,
+		KeepArchivedFolders: true,
+	}, nil
 }
 
 
 // OnAccountSetGlobalPrivacySettings(f func(ctx context.Context, settings GlobalPrivacySettings) (*GlobalPrivacySettings, error)) {
 func (a *application) accountSetGlobalPrivacySettings(ctx context.Context, settings tg.GlobalPrivacySettings) (*tg.GlobalPrivacySettings, error) {
-    return &tg.GlobalPrivacySettings{}, nil
+    return &tg.GlobalPrivacySettings{
+    	KeepArchivedUnmuted: true,
+    	KeepArchivedFolders: true,
+	}, nil
 }
 
 
@@ -690,7 +767,9 @@ func (a *application) accountDeclinePasswordReset(ctx context.Context) (bool, er
 
 // OnAccountGetChatThemes(f func(ctx context.Context, hash int64) (AccountThemesClass, error)) {
 func (a *application) accountGetChatThemes(ctx context.Context, hash int64) (tg.AccountThemesClass, error) {
-    return &tg.AccountThemes{}, nil
+    return &tg.AccountThemes{
+		Hash: 333444,
+	}, nil
 }
 
 
@@ -708,7 +787,9 @@ func (a *application) accountChangeAuthorizationSettings(ctx context.Context, re
 
 // OnAccountGetSavedRingtones(f func(ctx context.Context, hash int64) (AccountSavedRingtonesClass, error)) {
 func (a *application) accountGetSavedRingtones(ctx context.Context, hash int64) (tg.AccountSavedRingtonesClass, error) {
-    return &tg.AccountSavedRingtones{}, nil
+    return &tg.AccountSavedRingtones{
+		Hash: 333444,
+	}, nil
 }
 
 
@@ -720,7 +801,10 @@ func (a *application) accountSaveRingtone(ctx context.Context, request *tg.Accou
 
 // OnAccountUploadRingtone(f func(ctx context.Context, request *AccountUploadRingtoneRequest) (DocumentClass, error)) {
 func (a *application) accountUploadRingtone(ctx context.Context, request *tg.AccountUploadRingtoneRequest) (tg.DocumentClass, error) {
-    return &tg.Document{}, nil
+	return &tg.Document{
+		ID: 333444,
+		MimeType: "444333",
+	}, nil
 }
 
 
@@ -732,13 +816,17 @@ func (a *application) accountUpdateEmojiStatus(ctx context.Context, emojistatus 
 
 // OnAccountGetDefaultEmojiStatuses(f func(ctx context.Context, hash int64) (AccountEmojiStatusesClass, error)) {
 func (a *application) accountGetDefaultEmojiStatuses(ctx context.Context, hash int64) (tg.AccountEmojiStatusesClass, error) {
-    return &tg.AccountEmojiStatuses{}, nil
+    return &tg.AccountEmojiStatuses{
+		Hash: 333444,
+	}, nil
 }
 
 
 // OnAccountGetRecentEmojiStatuses(f func(ctx context.Context, hash int64) (AccountEmojiStatusesClass, error)) {
 func (a *application) accountGetRecentEmojiStatuses(ctx context.Context, hash int64) (tg.AccountEmojiStatusesClass, error) {
-    return &tg.AccountEmojiStatuses{}, nil
+    return &tg.AccountEmojiStatuses{
+		Hash: 333444,
+	}, nil
 }
 
 
@@ -762,19 +850,30 @@ func (a *application) accountToggleUsername(ctx context.Context, request *tg.Acc
 
 // OnAccountGetDefaultProfilePhotoEmojis(f func(ctx context.Context, hash int64) (EmojiListClass, error)) {
 func (a *application) accountGetDefaultProfilePhotoEmojis(ctx context.Context, hash int64) (tg.EmojiListClass, error) {
-    return &tg.EmojiList{}, nil
+    return &tg.EmojiList{
+    	Hash: 333444,
+	}, nil
 }
 
 
 // OnAccountGetDefaultGroupPhotoEmojis(f func(ctx context.Context, hash int64) (EmojiListClass, error)) {
 func (a *application) accountGetDefaultGroupPhotoEmojis(ctx context.Context, hash int64) (tg.EmojiListClass, error) {
-    return &tg.EmojiList{}, nil
+    return &tg.EmojiList{
+    	Hash: 33334444,
+	}, nil
 }
 
 
 // OnAccountGetAutoSaveSettings(f func(ctx context.Context) (*AccountAutoSaveSettings, error)) {
 func (a *application) accountGetAutoSaveSettings(ctx context.Context) (*tg.AccountAutoSaveSettings, error) {
-    return &tg.AccountAutoSaveSettings{}, nil
+    return &tg.AccountAutoSaveSettings{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -798,14 +897,25 @@ func (a *application) accountInvalidateSignInCodes(ctx context.Context, codes []
 
 // OnUsersGetUsers(f func(ctx context.Context, id []InputUserClass) ([]UserClass, error)) {
 func (a *application) usersGetUsers(ctx context.Context, id []tg.InputUserClass) ([]tg.UserClass, error) {
-    //return &[]tg.User{}, nil
-	return nil,nil
+	return []tg.UserClass{
+		&tg.User{
+			Username: "333444",
+			Phone: "444333",
+		},
+	},nil
 }
 
 
 // OnUsersGetFullUser(f func(ctx context.Context, id InputUserClass) (*UsersUserFull, error)) {
 func (a *application) usersGetFullUserbak(ctx context.Context, id *tg.InputUserClass) (*tg.UsersUserFull, error) {
-    return &tg.UsersUserFull{}, nil
+    return &tg.UsersUserFull{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -817,25 +927,43 @@ func (a *application) usersSetSecureValueErrors(ctx context.Context, request *tg
 
 // OnContactsGetContactIDs(f func(ctx context.Context, hash int64) ([]int, error)) {
 func (a *application) contactsGetContactIDs(ctx context.Context, hash int64) ([]int, error) {
-    return []int{}, nil
+	return []int{333444}, nil
 }
 
 
 // OnContactsGetStatuses(f func(ctx context.Context) ([]ContactStatus, error)) {
 func (a *application) contactsGetStatuses(ctx context.Context) ([]tg.ContactStatus, error) {
-    return []tg.ContactStatus{}, nil
+    return []tg.ContactStatus{
+    	{
+    		UserID: 333444,
+		},
+	}, nil
 }
 
 
 // OnContactsGetContacts(f func(ctx context.Context, hash int64) (ContactsContactsClass, error)) {
 func (a *application) contactsGetContactsbak(ctx context.Context, hash int64) (tg.ContactsContactsClass, error) {
-    return &tg.ContactsContacts{}, nil
+    return &tg.ContactsContacts{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnContactsImportContacts(f func(ctx context.Context, contacts []InputPhoneContact) (*ContactsImportedContacts, error)) {
 func (a *application) contactsImportContacts(ctx context.Context, contacts []tg.InputPhoneContact) (*tg.ContactsImportedContacts, error) {
-    return &tg.ContactsImportedContacts{}, nil
+    return &tg.ContactsImportedContacts{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -868,25 +996,53 @@ func (a *application) contactsUnblock(ctx context.Context, request *tg.ContactsU
 
 // OnContactsGetBlocked(f func(ctx context.Context, request *ContactsGetBlockedRequest) (ContactsBlockedClass, error)) {
 func (a *application) contactsGetBlocked(ctx context.Context, request *tg.ContactsGetBlockedRequest) (tg.ContactsBlockedClass, error) {
-    return &tg.ContactsBlocked{}, nil
+    return &tg.ContactsBlocked{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnContactsSearch(f func(ctx context.Context, request *ContactsSearchRequest) (*ContactsFound, error)) {
 func (a *application) contactsSearch(ctx context.Context, request *tg.ContactsSearchRequest) (*tg.ContactsFound, error) {
-    return &tg.ContactsFound{}, nil
+    return &tg.ContactsFound{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnContactsResolveUsername(f func(ctx context.Context, username string) (*ContactsResolvedPeer, error)) {
 func (a *application) contactsResolveUsernamebak(ctx context.Context, username string) (*tg.ContactsResolvedPeer, error) {
-    return &tg.ContactsResolvedPeer{}, nil
+    return &tg.ContactsResolvedPeer{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnContactsGetTopPeers(f func(ctx context.Context, request *ContactsGetTopPeersRequest) (ContactsTopPeersClass, error)) {
 func (a *application) contactsGetTopPeers(ctx context.Context, request *tg.ContactsGetTopPeersRequest) (tg.ContactsTopPeersClass, error) {
-    return &tg.ContactsTopPeers{}, nil
+    return &tg.ContactsTopPeers{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -904,7 +1060,14 @@ func (a *application) contactsResetSaved(ctx context.Context) (bool, error) {
 
 // OnContactsGetSaved(f func(ctx context.Context) ([]SavedPhoneContact, error)) {
 func (a *application) contactsGetSaved(ctx context.Context) ([]tg.SavedPhoneContact, error) {
-    return []tg.SavedPhoneContact{}, nil
+    return []tg.SavedPhoneContact{
+    	{
+    		Phone: "333444",
+    		FirstName: "theLostLamb",
+    		LastName: "theLostLamb3344",
+    		Date: 444333,
+		},
+	}, nil
 }
 
 
@@ -952,13 +1115,23 @@ func (a *application) contactsBlockFromReplies(ctx context.Context, request *tg.
 
 // OnContactsResolvePhone(f func(ctx context.Context, phone string) (*ContactsResolvedPeer, error)) {
 func (a *application) contactsResolvePhone(ctx context.Context, phone string) (*tg.ContactsResolvedPeer, error) {
-    return &tg.ContactsResolvedPeer{}, nil
+    return &tg.ContactsResolvedPeer{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnContactsExportContactToken(f func(ctx context.Context) (*ExportedContactToken, error)) {
 func (a *application) contactsExportContactToke(ctx context.Context) (*tg.ExportedContactToken, error) {
-    return &tg.ExportedContactToken{}, nil
+    return &tg.ExportedContactToken{
+    	URL: "333444",
+    	Expires: 444333,
+	}, nil
 }
 
 
@@ -988,49 +1161,93 @@ func (a *application) contactsSetBlocked(ctx context.Context, request *tg.Contac
 
 // OnMessagesGetMessages(f func(ctx context.Context, id []InputMessageClass) (MessagesMessagesClass, error)) {
 func (a *application) messagesGetMessages(ctx context.Context, id []tg.InputMessageClass) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetDialogs(f func(ctx context.Context, request *MessagesGetDialogsRequest) (MessagesDialogsClass, error)) {
 func (a *application) messagesGetDialogsbak(ctx context.Context, request *tg.MessagesGetDialogsRequest) (tg.MessagesDialogsClass, error) {
-    return &tg.MessagesDialogs{}, nil
+    return &tg.MessagesDialogs{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+
+	}, nil
 }
 
 
 // OnMessagesGetHistory(f func(ctx context.Context, request *MessagesGetHistoryRequest) (MessagesMessagesClass, error)) {
 func (a *application) messagesGetHistory(ctx context.Context, request *tg.MessagesGetHistoryRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesSearch(f func(ctx context.Context, request *MessagesSearchRequest) (MessagesMessagesClass, error)) {
 func (a *application) messagesSearch(ctx context.Context, request *tg.MessagesSearchRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesReadHistory(f func(ctx context.Context, request *MessagesReadHistoryRequest) (*MessagesAffectedMessages, error)) {
 func (a *application) messagesReadHistory(ctx context.Context, request *tg.MessagesReadHistoryRequest) (*tg.MessagesAffectedMessages, error) {
-    return &tg.MessagesAffectedMessages{}, nil
+    return &tg.MessagesAffectedMessages{
+		Pts: 333444,
+		PtsCount: 444333,
+	}, nil
 }
 
 
 // OnMessagesDeleteHistory(f func(ctx context.Context, request *MessagesDeleteHistoryRequest) (*MessagesAffectedHistory, error)) {
 func (a *application) messagesDeleteHistory(ctx context.Context, request *tg.MessagesDeleteHistoryRequest) (*tg.MessagesAffectedHistory, error) {
-    return &tg.MessagesAffectedHistory{}, nil
+    return &tg.MessagesAffectedHistory{
+		Pts: 333444,
+		PtsCount: 444333,
+		Offset: 343434,
+	}, nil
 }
 
 
 // OnMessagesDeleteMessages(f func(ctx context.Context, request *MessagesDeleteMessagesRequest) (*MessagesAffectedMessages, error)) {
 func (a *application) messagesDeleteMessages(ctx context.Context, request *tg.MessagesDeleteMessagesRequest) (*tg.MessagesAffectedMessages, error) {
-    return &tg.MessagesAffectedMessages{}, nil
+    return &tg.MessagesAffectedMessages{
+    	Pts: 333444,
+    	PtsCount: 444333,
+	}, nil
 }
 
 
 // OnMessagesReceivedMessages(f func(ctx context.Context, maxid int) ([]ReceivedNotifyMessage, error)) {
 func (a *application) messagesReceivedMessages(ctx context.Context, maxid int) ([]tg.ReceivedNotifyMessage, error) {
-    return []tg.ReceivedNotifyMessage{}, nil
+    return []tg.ReceivedNotifyMessage{
+    	{
+    		ID: 333444,
+    		Flags: 444333,
+		},
+	}, nil
 }
 
 
@@ -1075,7 +1292,20 @@ func (a *application) messagesReportSpam(ctx context.Context, peer tg.InputPeerC
 
 // OnMessagesGetPeerSettings(f func(ctx context.Context, peer InputPeerClass) (*MessagesPeerSettings, error)) {
 func (a *application) messagesGetPeerSettings(ctx context.Context, peer tg.InputPeerClass) (*tg.MessagesPeerSettings, error) {
-    return &tg.MessagesPeerSettings{}, nil
+    return &tg.MessagesPeerSettings{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -1087,13 +1317,28 @@ func (a *application) messagesReport(ctx context.Context, request *tg.MessagesRe
 
 // OnMessagesGetChats(f func(ctx context.Context, id []int64) (MessagesChatsClass, error)) {
 func (a *application) messagesGetChats(ctx context.Context, id []int64) (tg.MessagesChatsClass, error) {
-    return &tg.MessagesChats{}, nil
+    return &tg.MessagesChats{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetFullChat(f func(ctx context.Context, chatid int64) (*MessagesChatFull, error)) {
 func (a *application) messagesGetFullChat(ctx context.Context, chatid int64) (*tg.MessagesChatFull, error) {
-    return &tg.MessagesChatFull{}, nil
+    return &tg.MessagesChatFull{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+
+	}, nil
 }
 
 
@@ -1144,19 +1389,30 @@ func (a *application) messagesCreateChat(ctx context.Context, request *tg.Messag
 
 // OnMessagesGetDhConfig(f func(ctx context.Context, request *MessagesGetDhConfigRequest) (MessagesDhConfigClass, error)) {
 func (a *application) messagesGetDhConfig(ctx context.Context, request *tg.MessagesGetDhConfigRequest) (tg.MessagesDhConfigClass, error) {
-    return &tg.MessagesDhConfig{}, nil
+    return &tg.MessagesDhConfig{
+    	G: 333444,
+    	Version: 444333,
+	}, nil
 }
 
 
 // OnMessagesRequestEncryption(f func(ctx context.Context, request *MessagesRequestEncryptionRequest) (EncryptedChatClass, error)) {
 func (a *application) messagesRequestEncryptio(ctx context.Context, request *tg.MessagesRequestEncryptionRequest) (tg.EncryptedChatClass, error) {
-    return &tg.EncryptedChat{}, nil
+    return &tg.EncryptedChat{
+		ID: 333444,
+		AccessHash: 444333,
+		Date: 343434,
+	}, nil
 }
 
 
 // OnMessagesAcceptEncryption(f func(ctx context.Context, request *MessagesAcceptEncryptionRequest) (EncryptedChatClass, error)) {
 func (a *application) messagesAcceptEncryptio(ctx context.Context, request *tg.MessagesAcceptEncryptionRequest) (tg.EncryptedChatClass, error) {
-    return &tg.EncryptedChat{}, nil
+    return &tg.EncryptedChat{
+    	ID: 333444,
+    	AccessHash: 444333,
+    	Date: 343434,
+	}, nil
 }
 
 
@@ -1180,25 +1436,31 @@ func (a *application) messagesReadEncryptedHistory(ctx context.Context, request 
 
 // OnMessagesSendEncrypted(f func(ctx context.Context, request *MessagesSendEncryptedRequest) (MessagesSentEncryptedMessageClass, error)) {
 func (a *application) messagesSendEncrypted(ctx context.Context, request *tg.MessagesSendEncryptedRequest) (tg.MessagesSentEncryptedMessageClass, error) {
-    return &tg.MessagesSentEncryptedMessage{}, nil
+    return &tg.MessagesSentEncryptedMessage{
+		Date: 333444,
+	}, nil
 }
 
 
 // OnMessagesSendEncryptedFile(f func(ctx context.Context, request *MessagesSendEncryptedFileRequest) (MessagesSentEncryptedMessageClass, error)) {
 func (a *application) messagesSendEncryptedFile(ctx context.Context, request *tg.MessagesSendEncryptedFileRequest) (tg.MessagesSentEncryptedMessageClass, error) {
-    return &tg.MessagesSentEncryptedMessage{}, nil
+    return &tg.MessagesSentEncryptedMessage{
+		Date: 333444,
+	}, nil
 }
 
 
 // OnMessagesSendEncryptedService(f func(ctx context.Context, request *MessagesSendEncryptedServiceRequest) (MessagesSentEncryptedMessageClass, error)) {
 func (a *application) messagesSendEncryptedService(ctx context.Context, request *tg.MessagesSendEncryptedServiceRequest) (tg.MessagesSentEncryptedMessageClass, error) {
-    return &tg.MessagesSentEncryptedMessage{}, nil
+    return &tg.MessagesSentEncryptedMessage{
+    	Date: 333444,
+	}, nil
 }
 
 
 // OnMessagesReceivedQueue(f func(ctx context.Context, maxqts int) ([]int64, error)) {
 func (a *application) messagesReceivedQueue(ctx context.Context, maxqts int) ([]int64, error) {
-    return []int64{}, nil
+    return []int64{333444}, nil
 }
 
 
@@ -1210,25 +1472,47 @@ func (a *application) messagesReportEncryptedSpam(ctx context.Context, peer tg.I
 
 // OnMessagesReadMessageContents(f func(ctx context.Context, id []int) (*MessagesAffectedMessages, error)) {
 func (a *application) messagesReadMessageContents(ctx context.Context, id []int) (*tg.MessagesAffectedMessages, error) {
-    return &tg.MessagesAffectedMessages{}, nil
+    return &tg.MessagesAffectedMessages{
+    	Pts: 333444,
+    	PtsCount: 444333,
+	}, nil
 }
 
 
 // OnMessagesGetStickers(f func(ctx context.Context, request *MessagesGetStickersRequest) (MessagesStickersClass, error)) {
 func (a *application) messagesGetStickersbak(ctx context.Context, request *tg.MessagesGetStickersRequest) (tg.MessagesStickersClass, error) {
-    return &tg.MessagesStickers{}, nil
+    return &tg.MessagesStickers{
+    	Hash: 333444,
+    	Stickers: []tg.DocumentClass{
+			&tg.Document{
+				ID: 333444,
+				MimeType: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetAllStickers(f func(ctx context.Context, hash int64) (MessagesAllStickersClass, error)) {
 func (a *application) messagesGetAllStickers(ctx context.Context, hash int64) (tg.MessagesAllStickersClass, error) {
-    return &tg.MessagesAllStickers{}, nil
+	return &tg.MessagesAllStickers{
+		Hash: 333444,
+		Sets: []tg.StickerSet{
+			{
+				ID: 333444,
+				Title: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetWebPagePreview(f func(ctx context.Context, request *MessagesGetWebPagePreviewRequest) (MessageMediaClass, error)) {
 func (a *application) messagesGetWebPagePreview(ctx context.Context, request *tg.MessagesGetWebPagePreviewRequest) (tg.MessageMediaClass, error) {
-    return &tg.MessageMediaPhoto{}, nil
+    return &tg.MessageMediaPhoto{
+    	Spoiler: true,
+    	TTLSeconds: 333444,
+	}, nil
 }
 
 
@@ -1240,7 +1524,10 @@ func (a *application) messagesExportChatInvite(ctx context.Context, request *tg.
 
 // OnMessagesCheckChatInvite(f func(ctx context.Context, hash string) (ChatInviteClass, error)) {
 func (a *application) messagesCheckChatInvite(ctx context.Context, hash string) (tg.ChatInviteClass, error) {
-    return &tg.ChatInvite{}, nil
+    return &tg.ChatInvite{
+    	Title: "333444",
+    	About: "444333",
+	}, nil
 }
 
 
@@ -1304,7 +1591,14 @@ func (a *application) messagesStartBot(ctx context.Context, request *tg.Messages
 
 // OnMessagesGetMessagesViews(f func(ctx context.Context, request *MessagesGetMessagesViewsRequest) (*MessagesMessageViews, error)) {
 func (a *application) messagesGetMessagesViews(ctx context.Context, request *tg.MessagesGetMessagesViewsRequest) (*tg.MessagesMessageViews, error) {
-    return &tg.MessagesMessageViews{}, nil
+    return &tg.MessagesMessageViews{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -1325,7 +1619,14 @@ func (a *application) messagesMigrateChat(ctx context.Context, chatid int64) (tg
 
 // OnMessagesSearchGlobal(f func(ctx context.Context, request *MessagesSearchGlobalRequest) (MessagesMessagesClass, error)) {
 func (a *application) messagesSearchGlobal(ctx context.Context, request *tg.MessagesSearchGlobalRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -1337,13 +1638,18 @@ func (a *application) messagesReorderStickerSets(ctx context.Context, request *t
 
 // OnMessagesGetDocumentByHash(f func(ctx context.Context, request *MessagesGetDocumentByHashRequest) (DocumentClass, error)) {
 func (a *application) messagesGetDocumentByHash(ctx context.Context, request *tg.MessagesGetDocumentByHashRequest) (tg.DocumentClass, error) {
-    return &tg.Document{}, nil
+	return &tg.Document{
+		ID: 333444,
+		MimeType: "444333",
+	}, nil
 }
 
 
 // OnMessagesGetSavedGifs(f func(ctx context.Context, hash int64) (MessagesSavedGifsClass, error)) {
 func (a *application) messagesGetSavedGifs(ctx context.Context, hash int64) (tg.MessagesSavedGifsClass, error) {
-    return &tg.MessagesSavedGifs{}, nil
+    return &tg.MessagesSavedGifs{
+    	Hash: 333444,
+	}, nil
 }
 
 
@@ -1355,7 +1661,14 @@ func (a *application) messagesSaveGif(ctx context.Context, request *tg.MessagesS
 
 // OnMessagesGetInlineBotResults(f func(ctx context.Context, request *MessagesGetInlineBotResultsRequest) (*MessagesBotResults, error)) {
 func (a *application) messagesGetInlineBotResults(ctx context.Context, request *tg.MessagesGetInlineBotResultsRequest) (*tg.MessagesBotResults, error) {
-    return &tg.MessagesBotResults{}, nil
+    return &tg.MessagesBotResults{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -1376,7 +1689,9 @@ func (a *application) messagesSendInlineBotResult(ctx context.Context, request *
 
 // OnMessagesGetMessageEditData(f func(ctx context.Context, request *MessagesGetMessageEditDataRequest) (*MessagesMessageEditData, error)) {
 func (a *application) messagesGetMessageEditData(ctx context.Context, request *tg.MessagesGetMessageEditDataRequest) (*tg.MessagesMessageEditData, error) {
-    return &tg.MessagesMessageEditData{}, nil
+    return &tg.MessagesMessageEditData{
+    	Caption: true,
+	}, nil
 }
 
 
@@ -1397,7 +1712,12 @@ func (a *application) messagesEditInlineBotMessage(ctx context.Context, request 
 
 // OnMessagesGetBotCallbackAnswer(f func(ctx context.Context, request *MessagesGetBotCallbackAnswerRequest) (*MessagesBotCallbackAnswer, error)) {
 func (a *application) messagesGetBotCallbackAnswer(ctx context.Context, request *tg.MessagesGetBotCallbackAnswerRequest) (*tg.MessagesBotCallbackAnswer, error) {
-    return &tg.MessagesBotCallbackAnswer{}, nil
+    return &tg.MessagesBotCallbackAnswer{
+    	Alert: true,
+    	Message: "333444",
+    	URL: "444333",
+    	CacheTime: 343434,
+	}, nil
 }
 
 
@@ -1409,7 +1729,14 @@ func (a *application) messagesSetBotCallbackAnswer(ctx context.Context, request 
 
 // OnMessagesGetPeerDialogs(f func(ctx context.Context, peers []InputDialogPeerClass) (*MessagesPeerDialogs, error)) {
 func (a *application) messagesGetPeerDialogsbak(ctx context.Context, peers *[]tg.InputDialogPeerClass) (*tg.MessagesPeerDialogs, error) {
-    return &tg.MessagesPeerDialogs{}, nil
+    return &tg.MessagesPeerDialogs{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -1430,7 +1757,10 @@ func (a *application) messagesGetAllDrafts(ctx context.Context) (tg.UpdatesClass
 
 // OnMessagesGetFeaturedStickers(f func(ctx context.Context, hash int64) (MessagesFeaturedStickersClass, error)) {
 func (a *application) messagesGetFeaturedStickers(ctx context.Context, hash int64) (tg.MessagesFeaturedStickersClass, error) {
-    return &tg.MessagesFeaturedStickers{}, nil
+    return &tg.MessagesFeaturedStickers{
+    	Hash: 333444,
+    	Count: 444333,
+	}, nil
 }
 
 
@@ -1442,7 +1772,9 @@ func (a *application) messagesReadFeaturedStickers(ctx context.Context, id []int
 
 // OnMessagesGetRecentStickers(f func(ctx context.Context, request *MessagesGetRecentStickersRequest) (MessagesRecentStickersClass, error)) {
 func (a *application) messagesGetRecentStickers(ctx context.Context, request *tg.MessagesGetRecentStickersRequest) (tg.MessagesRecentStickersClass, error) {
-    return &tg.MessagesRecentStickers{}, nil
+    return &tg.MessagesRecentStickers{
+    	Hash: 333444,
+	}, nil
 }
 
 
@@ -1460,20 +1792,54 @@ func (a *application) messagesClearRecentStickers(ctx context.Context, request *
 
 // OnMessagesGetArchivedStickers(f func(ctx context.Context, request *MessagesGetArchivedStickersRequest) (*MessagesArchivedStickers, error)) {
 func (a *application) messagesGetArchivedStickers(ctx context.Context, request *tg.MessagesGetArchivedStickersRequest) (*tg.MessagesArchivedStickers, error) {
-    return &tg.MessagesArchivedStickers{}, nil
+    return &tg.MessagesArchivedStickers{
+    	Count: 333444,
+	}, nil
 }
 
 
 // OnMessagesGetMaskStickers(f func(ctx context.Context, hash int64) (MessagesAllStickersClass, error)) {
 func (a *application) messagesGetMaskStickers(ctx context.Context, hash int64) (tg.MessagesAllStickersClass, error) {
-    return &tg.MessagesAllStickers{}, nil
+	return &tg.MessagesAllStickers{
+		Hash: 333444,
+		Sets: []tg.StickerSet{
+			{
+				ID: 333444,
+				Title: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetAttachedStickers(f func(ctx context.Context, media InputStickeredMediaClass) ([]StickerSetCoveredClass, error)) {
 func (a *application) messagesGetAttachedStickers(ctx context.Context, media tg.InputStickeredMediaClass) ([]tg.StickerSetCoveredClass, error) {
-    //return &[]tg.StickerSetCovered{}, nil
-	return nil,nil
+	return []tg.StickerSetCoveredClass{
+		&tg.StickerSetCovered{
+			Set: struct {
+				Flags           bin.Fields
+				Archived        bool
+				Official        bool
+				Masks           bool
+				Animated        bool
+				Videos          bool
+				Emojis          bool
+				InstalledDate   int
+				ID              int64
+				AccessHash      int64
+				Title           string
+				ShortName       string
+				Thumbs          []tg.PhotoSizeClass
+				ThumbDCID       int
+				ThumbVersion    int
+				ThumbDocumentID int64
+				Count           int
+				Hash            int
+			}{ Archived: true, Official: true, InstalledDate: 333444, ID: 333444, AccessHash: 333444, Title: "333444",
+
+				ShortName: "444333", },
+		},
+	},nil
 }
 
 
@@ -1494,25 +1860,54 @@ func (a *application) messagesSetInlineGameScore(ctx context.Context, request *t
 
 // OnMessagesGetGameHighScores(f func(ctx context.Context, request *MessagesGetGameHighScoresRequest) (*MessagesHighScores, error)) {
 func (a *application) messagesGetGameHighScores(ctx context.Context, request *tg.MessagesGetGameHighScoresRequest) (*tg.MessagesHighScores, error) {
-    return &tg.MessagesHighScores{}, nil
+    return &tg.MessagesHighScores{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetInlineGameHighScores(f func(ctx context.Context, request *MessagesGetInlineGameHighScoresRequest) (*MessagesHighScores, error)) {
 func (a *application) messagesGetInlineGameHighScores(ctx context.Context, request *tg.MessagesGetInlineGameHighScoresRequest) (*tg.MessagesHighScores, error) {
-    return &tg.MessagesHighScores{}, nil
+    return &tg.MessagesHighScores{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetCommonChats(f func(ctx context.Context, request *MessagesGetCommonChatsRequest) (MessagesChatsClass, error)) {
 func (a *application) messagesGetCommonChats(ctx context.Context, request *tg.MessagesGetCommonChatsRequest) (tg.MessagesChatsClass, error) {
-    return &tg.MessagesChats{}, nil
+    return &tg.MessagesChats{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetWebPage(f func(ctx context.Context, request *MessagesGetWebPageRequest) (*MessagesWebPage, error)) {
 func (a *application) messagesGetWebPage(ctx context.Context, request *tg.MessagesGetWebPageRequest) (*tg.MessagesWebPage, error) {
-    return &tg.MessagesWebPage{}, nil
+    return &tg.MessagesWebPage{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+
+	}, nil
 }
 
 
@@ -1530,7 +1925,15 @@ func (a *application) messagesReorderPinnedDialogs(ctx context.Context, request 
 
 // OnMessagesGetPinnedDialogs(f func(ctx context.Context, folderid int) (*MessagesPeerDialogs, error)) {
 func (a *application) messagesGetPinnedDialogsbak(ctx context.Context, folderid int) (*tg.MessagesPeerDialogs, error) {
-    return &tg.MessagesPeerDialogs{}, nil
+    return &tg.MessagesPeerDialogs{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+
+	}, nil
 }
 
 
@@ -1548,7 +1951,10 @@ func (a *application) messagesSetBotPrecheckoutResults(ctx context.Context, requ
 
 // OnMessagesUploadMedia(f func(ctx context.Context, request *MessagesUploadMediaRequest) (MessageMediaClass, error)) {
 func (a *application) messagesUploadMedia(ctx context.Context, request *tg.MessagesUploadMediaRequest) (tg.MessageMediaClass, error) {
-    return &tg.MessageMediaPhoto{}, nil
+    return &tg.MessageMediaPhoto{
+    	Spoiler: true,
+    	TTLSeconds: 333444,
+	}, nil
 }
 
 
@@ -1563,7 +1969,9 @@ func (a *application) messagesSendScreenshotNotificatio(ctx context.Context, req
 
 // OnMessagesGetFavedStickers(f func(ctx context.Context, hash int64) (MessagesFavedStickersClass, error)) {
 func (a *application) messagesGetFavedStickers(ctx context.Context, hash int64) (tg.MessagesFavedStickersClass, error) {
-    return &tg.MessagesFavedStickers{}, nil
+    return &tg.MessagesFavedStickers{
+    	Hash: 333444,
+	}, nil
 }
 
 
@@ -1575,19 +1983,37 @@ func (a *application) messagesFaveSticker(ctx context.Context, request *tg.Messa
 
 // OnMessagesGetUnreadMentions(f func(ctx context.Context, request *MessagesGetUnreadMentionsRequest) (MessagesMessagesClass, error)) {
 func (a *application) messagesGetUnreadMentions(ctx context.Context, request *tg.MessagesGetUnreadMentionsRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesReadMentions(f func(ctx context.Context, request *MessagesReadMentionsRequest) (*MessagesAffectedHistory, error)) {
 func (a *application) messagesReadMentions(ctx context.Context, request *tg.MessagesReadMentionsRequest) (*tg.MessagesAffectedHistory, error) {
-    return &tg.MessagesAffectedHistory{}, nil
+    return &tg.MessagesAffectedHistory{
+		Pts: 333444,
+		PtsCount: 444333,
+		Offset: 343434,
+	}, nil
 }
 
 
 // OnMessagesGetRecentLocations(f func(ctx context.Context, request *MessagesGetRecentLocationsRequest) (MessagesMessagesClass, error)) {
 func (a *application) messagesGetRecentLocations(ctx context.Context, request *tg.MessagesGetRecentLocationsRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -1602,19 +2028,30 @@ func (a *application) messagesSendMultiMedia(ctx context.Context, request *tg.Me
 
 // OnMessagesUploadEncryptedFile(f func(ctx context.Context, request *MessagesUploadEncryptedFileRequest) (EncryptedFileClass, error)) {
 func (a *application) messagesUploadEncryptedFile(ctx context.Context, request *tg.MessagesUploadEncryptedFileRequest) (tg.EncryptedFileClass, error) {
-    return &tg.EncryptedFile{}, nil
+    return &tg.EncryptedFile{
+    	ID: 333444,
+    	Size: 444333,
+    	DCID: 2,
+	}, nil
 }
 
 
 // OnMessagesSearchStickerSets(f func(ctx context.Context, request *MessagesSearchStickerSetsRequest) (MessagesFoundStickerSetsClass, error)) {
 func (a *application) messagesSearchStickerSets(ctx context.Context, request *tg.MessagesSearchStickerSetsRequest) (tg.MessagesFoundStickerSetsClass, error) {
-    return &tg.MessagesFoundStickerSets{}, nil
+    return &tg.MessagesFoundStickerSets{
+    	Hash: 333444,
+	}, nil
 }
 
 
 // OnMessagesGetSplitRanges(f func(ctx context.Context) ([]MessageRange, error)) {
 func (a *application) messagesGetSplitRanges(ctx context.Context) ([]tg.MessageRange, error)  {
-    return []tg.MessageRange{}, nil
+    return []tg.MessageRange{
+    	{
+    		MinID: 333444,
+    		MaxID: 444333,
+		},
+	}, nil
 }
 
 
@@ -1626,7 +2063,11 @@ func (a *application) messagesMarkDialogUnread(ctx context.Context, request *tg.
 
 // OnMessagesGetDialogUnreadMarks(f func(ctx context.Context) ([]DialogPeerClass, error)) {
 func (a *application) messagesGetDialogUnreadMarks(ctx context.Context) ([]tg.DialogPeerClass, error)  {
-    return []tg.DialogPeerClass{}, nil
+    return []tg.DialogPeerClass{
+    	&tg.DialogPeerFolder{
+    		FolderID: 333444,
+		},
+	}, nil
 }
 
 
@@ -1665,7 +2106,9 @@ func (a *application) messagesGetPollResults(ctx context.Context, request *tg.Me
 
 // OnMessagesGetOnlines(f func(ctx context.Context, peer InputPeerClass) (*ChatOnlines, error)) {
 func (a *application) messagesGetOnlines(ctx context.Context, peer tg.InputPeerClass) (*tg.ChatOnlines, error) {
-    return &tg.ChatOnlines{}, nil
+    return &tg.ChatOnlines{
+    	Onlines: 333444,
+	}, nil
 }
 
 
@@ -1686,31 +2129,48 @@ func (a *application) messagesEditChatDefaultBannedRights(ctx context.Context, r
 
 // OnMessagesGetEmojiKeywords(f func(ctx context.Context, langcode string) (*EmojiKeywordsDifference, error)) {
 func (a *application) messagesGetEmojiKeywords(ctx context.Context, langcode string) (*tg.EmojiKeywordsDifference, error) {
-    return &tg.EmojiKeywordsDifference{}, nil
+    return &tg.EmojiKeywordsDifference{
+		LangCode: "333444",
+		Version: 333444,
+	}, nil
 }
 
 
 // OnMessagesGetEmojiKeywordsDifference(f func(ctx context.Context, request *MessagesGetEmojiKeywordsDifferenceRequest) (*EmojiKeywordsDifference, error)) {
 func (a *application) messagesGetEmojiKeywordsDifference(ctx context.Context, request *tg.MessagesGetEmojiKeywordsDifferenceRequest) (*tg.EmojiKeywordsDifference, error) {
-    return &tg.EmojiKeywordsDifference{}, nil
+    return &tg.EmojiKeywordsDifference{
+		LangCode: "333444",
+		Version: 333444,
+	}, nil
 }
 
 
 // OnMessagesGetEmojiKeywordsLanguages(f func(ctx context.Context, langcodes []string) ([]EmojiLanguage, error)) {
 func (a *application) messagesGetEmojiKeywordsLanguages(ctx context.Context, langcodes []string) ([]tg.EmojiLanguage, error) {
-    return []tg.EmojiLanguage{}, nil
+    return []tg.EmojiLanguage{
+    	{
+    		LangCode: "333444",
+		},
+	}, nil
 }
 
 
 // OnMessagesGetEmojiURL(f func(ctx context.Context, langcode string) (*EmojiURL, error)) {
 func (a *application) messagesGetEmojiURL(ctx context.Context, langcode string) (*tg.EmojiURL, error) {
-    return &tg.EmojiURL{}, nil
+    return &tg.EmojiURL{
+    	URL: "444333",
+	}, nil
 }
 
 
 // OnMessagesGetSearchCounters(f func(ctx context.Context, request *MessagesGetSearchCountersRequest) ([]MessagesSearchCounter, error)) {
 func (a *application) messagesGetSearchCounters(ctx context.Context, request *tg.MessagesGetSearchCountersRequest) ([]tg.MessagesSearchCounter, error) {
-    return []tg.MessagesSearchCounter{}, nil
+    return []tg.MessagesSearchCounter{
+    	{
+    		Inexact: true,
+    		Count: 333444,
+		},
+	}, nil
 }
 
 
@@ -1734,13 +2194,27 @@ func (a *application) messagesHidePeerSettingsBar(ctx context.Context, peer tg.I
 
 // OnMessagesGetScheduledHistory(f func(ctx context.Context, request *MessagesGetScheduledHistoryRequest) (MessagesMessagesClass, error)) {
 func (a *application) messagesGetScheduledHistory(ctx context.Context, request *tg.MessagesGetScheduledHistoryRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetScheduledMessages(f func(ctx context.Context, request *MessagesGetScheduledMessagesRequest) (MessagesMessagesClass, error)) {
 func (a *application) messagesGetScheduledMessages(ctx context.Context, request *tg.MessagesGetScheduledMessagesRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -1764,7 +2238,16 @@ func (a *application) messagesDeleteScheduledMessages(ctx context.Context, reque
 
 // OnMessagesGetPollVotes(f func(ctx context.Context, request *MessagesGetPollVotesRequest) (*MessagesVotesList, error)) {
 func (a *application) messagesGetPollVotes(ctx context.Context, request *tg.MessagesGetPollVotesRequest) (*tg.MessagesVotesList, error) {
-    return &tg.MessagesVotesList{}, nil
+    return &tg.MessagesVotesList{
+    	Count: 333444,
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+
+	}, nil
 }
 
 
@@ -1776,14 +2259,22 @@ func (a *application) messagesToggleStickerSets(ctx context.Context, request *tg
 
 // OnMessagesGetDialogFilters(f func(ctx context.Context) ([]DialogFilterClass, error)) {
 func (a *application) messagesGetDialogFiltersbak(ctx context.Context) ([]tg.DialogFilterClass,error) {
-    //return &[]tg.DialogFilter{}, nil
-	return nil,nil
+	return []tg.DialogFilterClass{
+		&tg.DialogFilter{
+			ID: 333444,
+			Title: "444333",
+		},
+	},nil
 }
 
 
 // OnMessagesGetSuggestedDialogFilters(f func(ctx context.Context) ([]DialogFilterSuggested, error)) {
 func (a *application) messagesGetSuggestedDialogFilters(ctx context.Context) ([]tg.DialogFilterSuggested, error)  {
-    return []tg.DialogFilterSuggested{}, nil
+    return []tg.DialogFilterSuggested{
+    	{
+    		Description: "333444",
+		},
+	}, nil
 }
 
 
@@ -1801,19 +2292,33 @@ func (a *application) messagesUpdateDialogFiltersOrder(ctx context.Context, orde
 
 // OnMessagesGetOldFeaturedStickers(f func(ctx context.Context, request *MessagesGetOldFeaturedStickersRequest) (MessagesFeaturedStickersClass, error)) {
 func (a *application) messagesGetOldFeaturedStickers(ctx context.Context, request *tg.MessagesGetOldFeaturedStickersRequest) (tg.MessagesFeaturedStickersClass, error) {
-    return &tg.MessagesFeaturedStickers{}, nil
+    return &tg.MessagesFeaturedStickers{
+    	Hash: 333444,
+    	Count: 444333,
+	}, nil
 }
 
 
 // OnMessagesGetReplies(f func(ctx context.Context, request *MessagesGetRepliesRequest) (MessagesMessagesClass, error)) {
 func (a *application) messagesGetReplies(ctx context.Context, request *tg.MessagesGetRepliesRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetDiscussionMessage(f func(ctx context.Context, request *MessagesGetDiscussionMessageRequest) (*MessagesDiscussionMessage, error)) {
 func (a *application) messagesGetDiscussionMessage(ctx context.Context, request *tg.MessagesGetDiscussionMessageRequest) (*tg.MessagesDiscussionMessage, error) {
-    return &tg.MessagesDiscussionMessage{}, nil
+    return &tg.MessagesDiscussionMessage{
+    	MaxID: 333444,
+    	ReadInboxMaxID: 444333,
+    	ReadOutboxMaxID: 343434,
+	}, nil
 }
 
 
@@ -1825,7 +2330,11 @@ func (a *application) messagesReadDiscussio(ctx context.Context, request *tg.Mes
 
 // OnMessagesUnpinAllMessages(f func(ctx context.Context, request *MessagesUnpinAllMessagesRequest) (*MessagesAffectedHistory, error)) {
 func (a *application) messagesUnpinAllMessages(ctx context.Context, request *tg.MessagesUnpinAllMessagesRequest) (*tg.MessagesAffectedHistory, error) {
-    return &tg.MessagesAffectedHistory{}, nil
+    return &tg.MessagesAffectedHistory{
+		Pts: 333444,
+		PtsCount: 444333,
+		Offset: 343434,
+	}, nil
 }
 
 
@@ -1837,26 +2346,38 @@ func (a *application) messagesDeleteChat(ctx context.Context, chatid int64) (boo
 
 // OnMessagesDeletePhoneCallHistory(f func(ctx context.Context, request *MessagesDeletePhoneCallHistoryRequest) (*MessagesAffectedFoundMessages, error)) {
 func (a *application) messagesDeletePhoneCallHistory(ctx context.Context, request *tg.MessagesDeletePhoneCallHistoryRequest) (*tg.MessagesAffectedFoundMessages, error) {
-    return &tg.MessagesAffectedFoundMessages{}, nil
+    return &tg.MessagesAffectedFoundMessages{
+    	Pts: 333444,
+    	PtsCount: 444333,
+    	Offset: 343434,
+	}, nil
 }
 
 
 // OnMessagesCheckHistoryImport(f func(ctx context.Context, importhead string) (*MessagesHistoryImportParsed, error)) {
 func (a *application) messagesCheckHistoryImport(ctx context.Context, importhead string) (*tg.MessagesHistoryImportParsed, error) {
-    return &tg.MessagesHistoryImportParsed{}, nil
+    return &tg.MessagesHistoryImportParsed{
+    	Pm: true,
+    	Group: true,
+    	Title: "444333",
+	}, nil
 }
 
 
 // OnMessagesInitHistoryImport(f func(ctx context.Context, request *MessagesInitHistoryImportRequest) (*MessagesHistoryImport, error)) {
 func (a *application) messagesInitHistoryImport(ctx context.Context, request *tg.MessagesInitHistoryImportRequest) (*tg.MessagesHistoryImport, error) {
-    return &tg.MessagesHistoryImport{}, nil
+    return &tg.MessagesHistoryImport{
+    	ID: 33334444,
+	}, nil
 }
 
 
 // OnMessagesUploadImportedMedia(f func(ctx context.Context, request *MessagesUploadImportedMediaRequest) (MessageMediaClass, error)) {
 func (a *application) messagesUploadImportedMedia(ctx context.Context, request *tg.MessagesUploadImportedMediaRequest) (tg.MessageMediaClass, error) {
-    //return &tg.MessageMedia{}, nil
-	return &tg.MessageMediaDice{}, nil
+	return &tg.MessageMediaDice{
+		Value: 333444,
+		Emoticon: "444333",
+	}, nil
 }
 
 
@@ -1868,19 +2389,42 @@ func (a *application) messagesStartHistoryImport(ctx context.Context, request *t
 
 // OnMessagesGetExportedChatInvites(f func(ctx context.Context, request *MessagesGetExportedChatInvitesRequest) (*MessagesExportedChatInvites, error)) {
 func (a *application) messagesGetExportedChatInvites(ctx context.Context, request *tg.MessagesGetExportedChatInvitesRequest) (*tg.MessagesExportedChatInvites, error) {
-    return &tg.MessagesExportedChatInvites{}, nil
+    return &tg.MessagesExportedChatInvites{
+    	Count: 333444,
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetExportedChatInvite(f func(ctx context.Context, request *MessagesGetExportedChatInviteRequest) (MessagesExportedChatInviteClass, error)) {
 func (a *application) messagesGetExportedChatInvite(ctx context.Context, request *tg.MessagesGetExportedChatInviteRequest) (tg.MessagesExportedChatInviteClass, error) {
-    return &tg.MessagesExportedChatInvite{}, nil
+    return &tg.MessagesExportedChatInvite{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesEditExportedChatInvite(f func(ctx context.Context, request *MessagesEditExportedChatInviteRequest) (MessagesExportedChatInviteClass, error)) {
 func (a *application) messagesEditExportedChatInvite(ctx context.Context, request *tg.MessagesEditExportedChatInviteRequest) (tg.MessagesExportedChatInviteClass, error) {
-    return &tg.MessagesExportedChatInvite{}, nil
+    return &tg.MessagesExportedChatInvite{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+
+	}, nil
 }
 
 
@@ -1898,13 +2442,29 @@ func (a *application) messagesDeleteExportedChatInvite(ctx context.Context, requ
 
 // OnMessagesGetAdminsWithInvites(f func(ctx context.Context, peer InputPeerClass) (*MessagesChatAdminsWithInvites, error)) {
 func (a *application) messagesGetAdminsWithInvites(ctx context.Context, peer tg.InputPeerClass) (*tg.MessagesChatAdminsWithInvites, error) {
-    return &tg.MessagesChatAdminsWithInvites{}, nil
+    return &tg.MessagesChatAdminsWithInvites{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetChatInviteImporters(f func(ctx context.Context, request *MessagesGetChatInviteImportersRequest) (*MessagesChatInviteImporters, error)) {
 func (a *application) messagesGetChatInviteImporters(ctx context.Context, request *tg.MessagesGetChatInviteImportersRequest) (*tg.MessagesChatInviteImporters, error) {
-    return &tg.MessagesChatInviteImporters{}, nil
+    return &tg.MessagesChatInviteImporters{
+    	Count: 333444,
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+
+	}, nil
 }
 
 
@@ -1919,7 +2479,9 @@ func (a *application) messagesSetHistoryTTL(ctx context.Context, request *tg.Mes
 
 // OnMessagesCheckHistoryImportPeer(f func(ctx context.Context, peer InputPeerClass) (*MessagesCheckedHistoryImportPeer, error)) {
 func (a *application) messagesCheckHistoryImportPeer(ctx context.Context, peer tg.InputPeerClass) (*tg.MessagesCheckedHistoryImportPeer, error) {
-    return &tg.MessagesCheckedHistoryImportPeer{}, nil
+    return &tg.MessagesCheckedHistoryImportPeer{
+    	ConfirmText: "444333",
+	}, nil
 }
 
 
@@ -1934,19 +2496,26 @@ func (a *application) messagesSetChatTheme(ctx context.Context, request *tg.Mess
 
 // OnMessagesGetMessageReadParticipants(f func(ctx context.Context, request *MessagesGetMessageReadParticipantsRequest) ([]ReadParticipantDate, error)) {
 func (a *application) messagesGetMessageReadParticipants(ctx context.Context, request *tg.MessagesGetMessageReadParticipantsRequest) ([]tg.ReadParticipantDate, error) {
-    return []tg.ReadParticipantDate{}, nil
+    return []tg.ReadParticipantDate{
+    	{
+    		UserID: 333444,
+    		Date: 444333,
+		},
+	}, nil
 }
 
 
 // OnMessagesGetSearchResultsCalendar(f func(ctx context.Context, request *MessagesGetSearchResultsCalendarRequest) (*MessagesSearchResultsCalendar, error)) {
 func (a *application) messagesGetSearchResultsCalendar(ctx context.Context, request *tg.MessagesGetSearchResultsCalendarRequest) (*tg.MessagesSearchResultsCalendar, error) {
-    return &tg.MessagesSearchResultsCalendar{}, nil
+    return &tg.MessagesSearchResultsCalendar{Count: 333444,}, nil
 }
 
 
 // OnMessagesGetSearchResultsPositions(f func(ctx context.Context, request *MessagesGetSearchResultsPositionsRequest) (*MessagesSearchResultsPositions, error)) {
 func (a *application) messagesGetSearchResultsPositions(ctx context.Context, request *tg.MessagesGetSearchResultsPositionsRequest) (*tg.MessagesSearchResultsPositions, error) {
-    return &tg.MessagesSearchResultsPositions{}, nil
+    return &tg.MessagesSearchResultsPositions{
+    	Count: 333444,
+	}, nil
 }
 
 
@@ -2003,7 +2572,10 @@ func (a *application) messagesGetMessagesReactions(ctx context.Context, request 
 
 // OnMessagesGetMessageReactionsList(f func(ctx context.Context, request *MessagesGetMessageReactionsListRequest) (*MessagesMessageReactionsList, error)) {
 func (a *application) messagesGetMessageReactionsList(ctx context.Context, request *tg.MessagesGetMessageReactionsListRequest) (*tg.MessagesMessageReactionsList, error) {
-    return &tg.MessagesMessageReactionsList{}, nil
+    return &tg.MessagesMessageReactionsList{
+    	Count: 333444,
+    	NextOffset: "444333",
+	}, nil
 }
 
 
@@ -2018,7 +2590,9 @@ func (a *application) messagesSetChatAvailableReactions(ctx context.Context, req
 
 // OnMessagesGetAvailableReactions(f func(ctx context.Context, hash int) (MessagesAvailableReactionsClass, error)) {
 func (a *application) messagesGetAvailableReactionsbak(ctx context.Context, hash int) (tg.MessagesAvailableReactionsClass, error) {
-    return &tg.MessagesAvailableReactions{}, nil
+    return &tg.MessagesAvailableReactions{
+    	Hash: 333444,
+	}, nil
 }
 
 
@@ -2030,37 +2604,75 @@ func (a *application) messagesSetDefaultReactio(ctx context.Context, reaction tg
 
 // OnMessagesTranslateText(f func(ctx context.Context, request *MessagesTranslateTextRequest) (*MessagesTranslateResult, error)) {
 func (a *application) messagesTranslateText(ctx context.Context, request *tg.MessagesTranslateTextRequest) (*tg.MessagesTranslateResult, error) {
-    return &tg.MessagesTranslateResult{}, nil
+    return &tg.MessagesTranslateResult{
+    	Result: []tg.TextWithEntities{
+    		{
+    			Text: "333444",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetUnreadReactions(f func(ctx context.Context, request *MessagesGetUnreadReactionsRequest) (MessagesMessagesClass, error)) {
 func (a *application) messagesGetUnreadReactions(ctx context.Context, request *tg.MessagesGetUnreadReactionsRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesReadReactions(f func(ctx context.Context, request *MessagesReadReactionsRequest) (*MessagesAffectedHistory, error)) {
 func (a *application) messagesReadReactions(ctx context.Context, request *tg.MessagesReadReactionsRequest) (*tg.MessagesAffectedHistory, error) {
-    return &tg.MessagesAffectedHistory{}, nil
+    return &tg.MessagesAffectedHistory{
+    	Pts: 333444,
+    	PtsCount: 444333,
+    	Offset: 343434,
+	}, nil
 }
 
 
 // OnMessagesSearchSentMedia(f func(ctx context.Context, request *MessagesSearchSentMediaRequest) (MessagesMessagesClass, error)) {
 func (a *application) messagesSearchSentMedia(ctx context.Context, request *tg.MessagesSearchSentMediaRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetAttachMenuBots(f func(ctx context.Context, hash int64) (AttachMenuBotsClass, error)) {
 func (a *application) messagesGetAttachMenuBotsbak(ctx context.Context, hash int64) (tg.AttachMenuBotsClass, error) {
-    return &tg.AttachMenuBots{}, nil
+    return &tg.AttachMenuBots{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetAttachMenuBot(f func(ctx context.Context, bot InputUserClass) (*AttachMenuBotsBot, error)) {
 func (a *application) messagesGetAttachMenuBot(ctx context.Context, bot tg.InputUserClass) (*tg.AttachMenuBotsBot, error) {
-    return &tg.AttachMenuBotsBot{}, nil
+    return &tg.AttachMenuBotsBot{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -2072,7 +2684,10 @@ func (a *application) messagesToggleBotInAttachMenu(ctx context.Context, request
 
 // OnMessagesRequestWebView(f func(ctx context.Context, request *MessagesRequestWebViewRequest) (*WebViewResultURL, error)) {
 func (a *application) messagesRequestWebView(ctx context.Context, request *tg.MessagesRequestWebViewRequest) (*tg.WebViewResultURL, error) {
-    return &tg.WebViewResultURL{}, nil
+    return &tg.WebViewResultURL{
+    	QueryID: 333444,
+    	URL: "444333",
+	}, nil
 }
 
 
@@ -2084,13 +2699,21 @@ func (a *application) messagesProlongWebView(ctx context.Context, request *tg.Me
 
 // OnMessagesRequestSimpleWebView(f func(ctx context.Context, request *MessagesRequestSimpleWebViewRequest) (*SimpleWebViewResultURL, error)) {
 func (a *application) messagesRequestSimpleWebView(ctx context.Context, request *tg.MessagesRequestSimpleWebViewRequest) (*tg.SimpleWebViewResultURL, error) {
-    return &tg.SimpleWebViewResultURL{}, nil
+    return &tg.SimpleWebViewResultURL{
+    	URL: "333444",
+	}, nil
 }
 
 
 // OnMessagesSendWebViewResultMessage(f func(ctx context.Context, request *MessagesSendWebViewResultMessageRequest) (*WebViewMessageSent, error)) {
 func (a *application) messagesSendWebViewResultMessage(ctx context.Context, request *tg.MessagesSendWebViewResultMessageRequest) (*tg.WebViewMessageSent, error) {
-    return &tg.WebViewMessageSent{}, nil
+    return &tg.WebViewMessageSent{
+    	MsgID: &tg.InputBotInlineMessageID{
+    		DCID: 2,
+    		ID: 333444,
+    		AccessHash: 444333,
+		},
+	}, nil
 }
 
 
@@ -2105,7 +2728,10 @@ func (a *application) messagesSendWebViewData(ctx context.Context, request *tg.M
 
 // OnMessagesTranscribeAudio(f func(ctx context.Context, request *MessagesTranscribeAudioRequest) (*MessagesTranscribedAudio, error)) {
 func (a *application) messagesTranscribeAudio(ctx context.Context, request *tg.MessagesTranscribeAudioRequest) (*tg.MessagesTranscribedAudio, error) {
-    return &tg.MessagesTranscribedAudio{}, nil
+    return &tg.MessagesTranscribedAudio{
+    	TranscriptionID: 333444,
+    	Text: "444333",
+	}, nil
 }
 
 
@@ -2117,20 +2743,35 @@ func (a *application) messagesRateTranscribedAudio(ctx context.Context, request 
 
 // OnMessagesGetCustomEmojiDocuments(f func(ctx context.Context, documentid []int64) ([]DocumentClass, error)) {
 func (a *application) messagesGetCustomEmojiDocuments(ctx context.Context, documentid []int64) ([]tg.DocumentClass, error) {
-    //return &[]tg.Document{}, nil
-	return nil,nil
+	return []tg.DocumentClass{
+		&tg.Document{
+			ID: 333444,
+			MimeType: "444333",
+		},
+	},nil
 }
 
 
 // OnMessagesGetEmojiStickers(f func(ctx context.Context, hash int64) (MessagesAllStickersClass, error)) {
 func (a *application) messagesGetEmojiStickers(ctx context.Context, hash int64) (tg.MessagesAllStickersClass, error) {
-    return &tg.MessagesAllStickers{}, nil
+    return &tg.MessagesAllStickers{
+    	Hash: 333444,
+    	Sets: []tg.StickerSet{
+    		{
+    			ID: 333444,
+    			Title: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnMessagesGetFeaturedEmojiStickers(f func(ctx context.Context, hash int64) (MessagesFeaturedStickersClass, error)) {
 func (a *application) messagesGetFeaturedEmojiStickers(ctx context.Context, hash int64) (tg.MessagesFeaturedStickersClass, error) {
-    return &tg.MessagesFeaturedStickers{}, nil
+    return &tg.MessagesFeaturedStickers{
+    	Hash: 333444,
+    	Count: 444333,
+	}, nil
 }
 
 
@@ -2142,13 +2783,17 @@ func (a *application) messagesReportReactio(ctx context.Context, request *tg.Mes
 
 // OnMessagesGetTopReactions(f func(ctx context.Context, request *MessagesGetTopReactionsRequest) (MessagesReactionsClass, error)) {
 func (a *application) messagesGetTopReactions(ctx context.Context, request *tg.MessagesGetTopReactionsRequest) (tg.MessagesReactionsClass, error) {
-    return &tg.MessagesReactions{}, nil
+    return &tg.MessagesReactions{
+    	Hash: 333444,
+	}, nil
 }
 
 
 // OnMessagesGetRecentReactions(f func(ctx context.Context, request *MessagesGetRecentReactionsRequest) (MessagesReactionsClass, error)) {
 func (a *application) messagesGetRecentReactions(ctx context.Context, request *tg.MessagesGetRecentReactionsRequest) (tg.MessagesReactionsClass, error) {
-    return &tg.MessagesReactions{}, nil
+    return &tg.MessagesReactions{
+    	Hash: 444333,
+	}, nil
 }
 
 
@@ -2175,7 +2820,9 @@ func (a *application) messagesSetDefaultHistoryTTL(ctx context.Context, period i
 
 // OnMessagesGetDefaultHistoryTTL(f func(ctx context.Context) (*DefaultHistoryTTL, error)) {
 func (a *application) messagesGetDefaultHistoryTTL(ctx context.Context) (*tg.DefaultHistoryTTL, error)  {
-    return &tg.DefaultHistoryTTL{}, nil
+    return &tg.DefaultHistoryTTL{
+    	Period: 333444,
+	}, nil
 }
 
 
@@ -2190,25 +2837,33 @@ func (a *application) messagesSendBotRequestedPeer(ctx context.Context, request 
 
 // OnMessagesGetEmojiGroups(f func(ctx context.Context, hash int) (MessagesEmojiGroupsClass, error)) {
 func (a *application) messagesGetEmojiGroups(ctx context.Context, hash int) (tg.MessagesEmojiGroupsClass, error) {
-    return &tg.MessagesEmojiGroups{}, nil
+    return &tg.MessagesEmojiGroups{
+    	Hash: 333444,
+	}, nil
 }
 
 
 // OnMessagesGetEmojiStatusGroups(f func(ctx context.Context, hash int) (MessagesEmojiGroupsClass, error)) {
 func (a *application) messagesGetEmojiStatusGroups(ctx context.Context, hash int) (tg.MessagesEmojiGroupsClass, error) {
-    return &tg.MessagesEmojiGroups{}, nil
+    return &tg.MessagesEmojiGroups{
+		Hash: 333444,
+	}, nil
 }
 
 
 // OnMessagesGetEmojiProfilePhotoGroups(f func(ctx context.Context, hash int) (MessagesEmojiGroupsClass, error)) {
 func (a *application) messagesGetEmojiProfilePhotoGroups(ctx context.Context, hash int) (tg.MessagesEmojiGroupsClass, error) {
-    return &tg.MessagesEmojiGroups{}, nil
+    return &tg.MessagesEmojiGroups{
+		Hash: 333444,
+	}, nil
 }
 
 
 // OnMessagesSearchCustomEmoji(f func(ctx context.Context, request *MessagesSearchCustomEmojiRequest) (EmojiListClass, error)) {
 func (a *application) messagesSearchCustomEmoji(ctx context.Context, request *tg.MessagesSearchCustomEmojiRequest) (tg.EmojiListClass, error) {
-    return &tg.EmojiList{}, nil
+    return &tg.EmojiList{
+		Hash: 333444,
+	}, nil
 }
 
 
@@ -2220,13 +2875,20 @@ func (a *application) messagesTogglePeerTranslations(ctx context.Context, reques
 
 // OnMessagesGetBotApp(f func(ctx context.Context, request *MessagesGetBotAppRequest) (*MessagesBotApp, error)) {
 func (a *application) messagesGetBotApp(ctx context.Context, request *tg.MessagesGetBotAppRequest) (*tg.MessagesBotApp, error) {
-    return &tg.MessagesBotApp{}, nil
+    return &tg.MessagesBotApp{
+    	App: &tg.BotApp{
+    		AccessHash: 333444,
+    		Title: "444333",
+		},
+	}, nil
 }
 
 
 // OnMessagesRequestAppWebView(f func(ctx context.Context, request *MessagesRequestAppWebViewRequest) (*AppWebViewResultURL, error)) {
 func (a *application) messagesRequestAppWebView(ctx context.Context, request *tg.MessagesRequestAppWebViewRequest) (*tg.AppWebViewResultURL, error) {
-    return &tg.AppWebViewResultURL{}, nil
+    return &tg.AppWebViewResultURL{
+    	URL: "444333",
+	}, nil
 }
 
 
@@ -2241,49 +2903,91 @@ func (a *application) messagesSetChatWallPaper(ctx context.Context, request *tg.
 
 // OnUpdatesGetState(f func(ctx context.Context) (*UpdatesState, error)) {
 func (a *application) updatesGetStatebak(ctx context.Context) (*tg.UpdatesState, error){
-    return &tg.UpdatesState{}, nil
+    return &tg.UpdatesState{
+    	Pts: 333444,
+    	Qts: 444333,
+    	Date: 34334,
+    	Seq: 43334,
+	}, nil
 }
 
 
 // OnUpdatesGetDifference(f func(ctx context.Context, request *UpdatesGetDifferenceRequest) (UpdatesDifferenceClass, error)) {
 func (a *application) updatesGetDifferencebak(ctx context.Context, request *tg.UpdatesGetDifferenceRequest) (tg.UpdatesDifferenceClass, error) {
-    return &tg.UpdatesDifference{}, nil
+    return &tg.UpdatesDifference{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnUpdatesGetChannelDifference(f func(ctx context.Context, request *UpdatesGetChannelDifferenceRequest) (UpdatesChannelDifferenceClass, error)) {
 func (a *application) updatesGetChannelDifference(ctx context.Context, request *tg.UpdatesGetChannelDifferenceRequest) (tg.UpdatesChannelDifferenceClass, error) {
-    return &tg.UpdatesChannelDifference{}, nil
+    return &tg.UpdatesChannelDifference{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnPhotosUpdateProfilePhoto(f func(ctx context.Context, request *PhotosUpdateProfilePhotoRequest) (*PhotosPhoto, error)) {
 func (a *application) photosUpdateProfilePhoto(ctx context.Context, request *tg.PhotosUpdateProfilePhotoRequest) (*tg.PhotosPhoto, error) {
-    return &tg.PhotosPhoto{}, nil
+    return &tg.PhotosPhoto{
+
+	}, nil
 }
 
 
 // OnPhotosUploadProfilePhoto(f func(ctx context.Context, request *PhotosUploadProfilePhotoRequest) (*PhotosPhoto, error)) {
 func (a *application) photosUploadProfilePhoto(ctx context.Context, request *tg.PhotosUploadProfilePhotoRequest) (*tg.PhotosPhoto, error) {
-    return &tg.PhotosPhoto{}, nil
+    return &tg.PhotosPhoto{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnPhotosDeletePhotos(f func(ctx context.Context, id []InputPhotoClass) ([]int64, error)) {
 func (a *application) photosDeletePhotos(ctx context.Context, id []tg.InputPhotoClass) ([]int64, error) {
-    return []int64{}, nil
+    return []int64{333444}, nil
 }
 
 
 // OnPhotosGetUserPhotos(f func(ctx context.Context, request *PhotosGetUserPhotosRequest) (PhotosPhotosClass, error)) {
 func (a *application) photosGetUserPhotos(ctx context.Context, request *tg.PhotosGetUserPhotosRequest) (tg.PhotosPhotosClass, error) {
-    return &tg.PhotosPhotos{}, nil
+    return &tg.PhotosPhotos{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnPhotosUploadContactProfilePhoto(f func(ctx context.Context, request *PhotosUploadContactProfilePhotoRequest) (*PhotosPhoto, error)) {
 func (a *application) photosUploadContactProfilePhoto(ctx context.Context, request *tg.PhotosUploadContactProfilePhotoRequest) (*tg.PhotosPhoto, error) {
-    return &tg.PhotosPhoto{}, nil
+    return &tg.PhotosPhoto{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -2295,7 +2999,9 @@ func (a *application) uploadSaveFilePart(ctx context.Context, request *tg.Upload
 
 // OnUploadGetFile(f func(ctx context.Context, request *UploadGetFileRequest) (UploadFileClass, error)) {
 func (a *application) uploadGetFile(ctx context.Context, request *tg.UploadGetFileRequest) (tg.UploadFileClass, error) {
-    return &tg.UploadFile{}, nil
+    return &tg.UploadFile{
+    	Mtime: 333444,
+	}, nil
 }
 
 
@@ -2307,61 +3013,95 @@ func (a *application) uploadSaveBigFilePart(ctx context.Context, request *tg.Upl
 
 // OnUploadGetWebFile(f func(ctx context.Context, request *UploadGetWebFileRequest) (*UploadWebFile, error)) {
 func (a *application) uploadGetWebFile(ctx context.Context, request *tg.UploadGetWebFileRequest) (*tg.UploadWebFile, error) {
-    return &tg.UploadWebFile{}, nil
+    return &tg.UploadWebFile{
+		Mtime: 333444,
+	}, nil
 }
 
 
 // OnUploadGetCDNFile(f func(ctx context.Context, request *UploadGetCDNFileRequest) (UploadCDNFileClass, error)) {
 func (a *application) uploadGetCDNFile(ctx context.Context, request *tg.UploadGetCDNFileRequest) (tg.UploadCDNFileClass, error) {
-    return &tg.UploadCDNFile{}, nil
+    return &tg.UploadCDNFile{
+	}, nil
 }
 
 
 // OnUploadReuploadCDNFile(f func(ctx context.Context, request *UploadReuploadCDNFileRequest) ([]FileHash, error)) {
 func (a *application) uploadReuploadCDNFile(ctx context.Context, request *tg.UploadReuploadCDNFileRequest) ([]tg.FileHash, error) {
-    return []tg.FileHash{}, nil
+    return []tg.FileHash{
+    	{
+    		Offset: 333444,
+    		Limit: 444333,
+		},
+	}, nil
 }
 
 
 // OnUploadGetCDNFileHashes(f func(ctx context.Context, request *UploadGetCDNFileHashesRequest) ([]FileHash, error)) {
 func (a *application) uploadGetCDNFileHashes(ctx context.Context, request *tg.UploadGetCDNFileHashesRequest) ([]tg.FileHash, error) {
-    return []tg.FileHash{}, nil
+    return []tg.FileHash{
+		{
+			Offset: 333444,
+			Limit: 444333,
+		},
+	}, nil
 }
 
 
 // OnUploadGetFileHashes(f func(ctx context.Context, request *UploadGetFileHashesRequest) ([]FileHash, error)) {
 func (a *application) uploadGetFileHashes(ctx context.Context, request *tg.UploadGetFileHashesRequest) ([]tg.FileHash, error) {
-    return []tg.FileHash{}, nil
+    return []tg.FileHash{
+		{
+			Offset: 333444,
+			Limit: 444333,
+		},
+	}, nil
 }
 
 
 // OnHelpGetConfig(f func(ctx context.Context) (*Config, error)) {
 func (a *application) helpGetConfigbak(ctx context.Context) (*tg.Config, error) {
-    return &tg.Config{}, nil
+    return &tg.Config{
+    	Date: 343434,
+    	DCTxtDomainName: "444333",
+    	OnlineCloudTimeoutMs: 333444,
+	}, nil
 }
 
 
 // OnHelpGetNearestDC(f func(ctx context.Context) (*NearestDC, error)) {
 func (a *application) helpGetNearestDCbak(ctx context.Context) (*tg.NearestDC, error)  {
-    return &tg.NearestDC{}, nil
+    return &tg.NearestDC{
+    	Country: "4444333",
+    	ThisDC: 2,
+    	NearestDC: 1,
+	}, nil
 }
 
 
 // OnHelpGetAppUpdate(f func(ctx context.Context, source string) (HelpAppUpdateClass, error)) {
 func (a *application) helpGetAppUpdate(ctx context.Context, source string) (tg.HelpAppUpdateClass, error) {
-    return &tg.HelpAppUpdate{}, nil
+    return &tg.HelpAppUpdate{
+    	ID: 333444,
+    	Version: "444333",
+    	Text: "34334",
+	}, nil
 }
 
 
 // OnHelpGetInviteText(f func(ctx context.Context) (*HelpInviteText, error)) {
 func (a *application) helpGetInviteText(ctx context.Context) (*tg.HelpInviteText, error)  {
-    return &tg.HelpInviteText{}, nil
+    return &tg.HelpInviteText{
+    	Message: "33334444",
+	}, nil
 }
 
 
 // OnHelpGetSupport(f func(ctx context.Context) (*HelpSupport, error)) {
 func (a *application) helpGetSupport(ctx context.Context) (*tg.HelpSupport,error) {
-    return &tg.HelpSupport{}, nil
+    return &tg.HelpSupport{
+    	PhoneNumber: "343332222",
+	}, nil
 }
 
 
@@ -2382,19 +3122,35 @@ func (a *application) helpSetBotUpdatesStatus(ctx context.Context, request *tg.H
 
 // OnHelpGetCDNConfig(f func(ctx context.Context) (*CDNConfig, error)) {
 func (a *application) helpGetCDNConfig(ctx context.Context) (*tg.CDNConfig,error) {
-    return &tg.CDNConfig{}, nil
+    return &tg.CDNConfig{
+    	PublicKeys: []tg.CDNPublicKey{
+    		{
+    			DCID: 33344,
+    			PublicKey: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnHelpGetRecentMeURLs(f func(ctx context.Context, referer string) (*HelpRecentMeURLs, error)) {
 func (a *application) helpGetRecentMeURLs(ctx context.Context, referer string) (*tg.HelpRecentMeURLs, error) {
-    return &tg.HelpRecentMeURLs{}, nil
+    return &tg.HelpRecentMeURLs{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnHelpGetTermsOfServiceUpdate(f func(ctx context.Context) (HelpTermsOfServiceUpdateClass, error)) {
 func (a *application) helpGetTermsOfServiceUpdatebak(ctx context.Context) (tg.HelpTermsOfServiceUpdateClass, error) {
-    return &tg.HelpTermsOfServiceUpdate{},nil
+    return &tg.HelpTermsOfServiceUpdate{
+    	Expires: 333444,
+	},nil
 }
 
 
@@ -2406,13 +3162,18 @@ func (a *application) helpAcceptTermsOfServicebak(ctx context.Context, id *tg.Da
 
 // OnHelpGetDeepLinkInfo(f func(ctx context.Context, path string) (HelpDeepLinkInfoClass, error)) {
 func (a *application) helpGetDeepLinkInfo(ctx context.Context, path string) (tg.HelpDeepLinkInfoClass, error) {
-    return &tg.HelpDeepLinkInfo{}, nil
+    return &tg.HelpDeepLinkInfo{
+    	UpdateApp: true,
+    	Message: "444333",
+	}, nil
 }
 
 
 // OnHelpGetAppConfig(f func(ctx context.Context, hash int) (HelpAppConfigClass, error)) {
 func (a *application) helpGetAppConfigbak(ctx context.Context, hash int) (tg.HelpAppConfigClass, error) {
-    return &tg.HelpAppConfig{}, nil
+    return &tg.HelpAppConfig{
+    	Hash: 333444,
+	}, nil
 }
 
 
@@ -2424,31 +3185,50 @@ func (a *application) helpSaveAppLog(ctx context.Context, events []tg.InputAppEv
 
 // OnHelpGetPassportConfig(f func(ctx context.Context, hash int) (HelpPassportConfigClass, error)) {
 func (a *application) helpGetPassportConfig(ctx context.Context, hash int) (tg.HelpPassportConfigClass, error) {
-    return &tg.HelpPassportConfig{}, nil
+    return &tg.HelpPassportConfig{
+		Hash: 333444,
+	}, nil
 }
 
 
 // OnHelpGetSupportName(f func(ctx context.Context) (*HelpSupportName, error)) {
 func (a *application) helpGetSupportName(ctx context.Context) (*tg.HelpSupportName,error) {
-    return &tg.HelpSupportName{}, nil
+    return &tg.HelpSupportName{
+    	Name: "theLostLamb",
+	}, nil
 }
 
 
 // OnHelpGetUserInfo(f func(ctx context.Context, userid InputUserClass) (HelpUserInfoClass, error)) {
 func (a *application) helpGetUserInfo(ctx context.Context, userid tg.InputUserClass) (tg.HelpUserInfoClass, error) {
-    return &tg.HelpUserInfo{}, nil
+    return &tg.HelpUserInfo{
+    	Message: "333444",
+    	Author: "444333",
+    	Date: 34334,
+	}, nil
 }
 
 
 // OnHelpEditUserInfo(f func(ctx context.Context, request *HelpEditUserInfoRequest) (HelpUserInfoClass, error)) {
 func (a *application) helpEditUserInfo(ctx context.Context, request *tg.HelpEditUserInfoRequest) (tg.HelpUserInfoClass, error) {
-    return &tg.HelpUserInfo{}, nil
+    return &tg.HelpUserInfo{
+		Message: "333444",
+		Author: "444333",
+		Date: 34334,
+	}, nil
 }
 
 
 // OnHelpGetPromoData(f func(ctx context.Context) (HelpPromoDataClass, error)) {
 func (a *application) helpGetPromoDatabak(ctx context.Context) (tg.HelpPromoDataClass,error)  {
-    return &tg.HelpPromoData{}, nil
+    return &tg.HelpPromoData{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -2466,13 +3246,22 @@ func (a *application) helpDismissSuggestio(ctx context.Context, request *tg.Help
 
 // OnHelpGetCountriesList(f func(ctx context.Context, request *HelpGetCountriesListRequest) (HelpCountriesListClass, error)) {
 func (a *application) helpGetCountriesListbak(ctx context.Context, request *tg.HelpGetCountriesListRequest) (tg.HelpCountriesListClass, error) {
-    return &tg.HelpCountriesList{}, nil
+    return &tg.HelpCountriesList{
+    	Hash: 333444,
+	}, nil
 }
 
 
 // OnHelpGetPremiumPromo(f func(ctx context.Context) (*HelpPremiumPromo, error)) {
 func (a *application) helpGetPremiumPromobak(ctx context.Context) (*tg.HelpPremiumPromo, error)  {
-    return &tg.HelpPremiumPromo{}, nil
+    return &tg.HelpPremiumPromo{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -2484,7 +3273,10 @@ func (a *application) channelsReadHistory(ctx context.Context, request *tg.Chann
 
 // OnChannelsDeleteMessages(f func(ctx context.Context, request *ChannelsDeleteMessagesRequest) (*MessagesAffectedMessages, error)) {
 func (a *application) channelsDeleteMessages(ctx context.Context, request *tg.ChannelsDeleteMessagesRequest) (*tg.MessagesAffectedMessages, error) {
-    return &tg.MessagesAffectedMessages{}, nil
+    return &tg.MessagesAffectedMessages{
+    	Pts: 333444,
+    	PtsCount: 444333,
+	}, nil
 }
 
 
@@ -2496,31 +3288,66 @@ func (a *application) channelsReportSpam(ctx context.Context, request *tg.Channe
 
 // OnChannelsGetMessages(f func(ctx context.Context, request *ChannelsGetMessagesRequest) (MessagesMessagesClass, error)) {
 func (a *application) channelsGetMessagesbak(ctx context.Context, request *tg.ChannelsGetMessagesRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+	return &tg.MessagesMessages{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnChannelsGetParticipants(f func(ctx context.Context, request *ChannelsGetParticipantsRequest) (ChannelsChannelParticipantsClass, error)) {
 func (a *application) channelsGetParticipants(ctx context.Context, request *tg.ChannelsGetParticipantsRequest) (tg.ChannelsChannelParticipantsClass, error) {
-    return &tg.ChannelsChannelParticipants{}, nil
+    return &tg.ChannelsChannelParticipants{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnChannelsGetParticipant(f func(ctx context.Context, request *ChannelsGetParticipantRequest) (*ChannelsChannelParticipant, error)) {
 func (a *application) channelsGetParticipant(ctx context.Context, request *tg.ChannelsGetParticipantRequest) (*tg.ChannelsChannelParticipant, error) {
-    return &tg.ChannelsChannelParticipant{}, nil
+    return &tg.ChannelsChannelParticipant{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnChannelsGetChannels(f func(ctx context.Context, id []InputChannelClass) (MessagesChatsClass, error)) {
 func (a *application) channelsGetChannels(ctx context.Context, id []tg.InputChannelClass) (tg.MessagesChatsClass, error) {
-    return &tg.MessagesChats{}, nil
+    return &tg.MessagesChats{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
 // OnChannelsGetFullChannel(f func(ctx context.Context, channel InputChannelClass) (*MessagesChatFull, error)) {
 func (a *application) channelsGetFullChannel(ctx context.Context, channel tg.InputChannelClass) (*tg.MessagesChatFull, error) {
-    return &tg.MessagesChatFull{}, nil
+    return &tg.MessagesChatFull{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
@@ -2610,7 +3437,10 @@ func (a *application) channelsDeleteChannel(ctx context.Context, channel tg.Inpu
 
 // OnChannelsExportMessageLink(f func(ctx context.Context, request *ChannelsExportMessageLinkRequest) (*ExportedMessageLink, error)) {
 func (a *application) channelsExportMessageLink(ctx context.Context, request *tg.ChannelsExportMessageLinkRequest) (*tg.ExportedMessageLink, error) {
-    return &tg.ExportedMessageLink{}, nil
+    return &tg.ExportedMessageLink{
+    	Link: "333444",
+    	HTML: "444333",
+	}, nil
 }
 
 
@@ -2625,7 +3455,14 @@ func (a *application) channelsToggleSignatures(ctx context.Context, request *tg.
 
 // OnChannelsGetAdminedPublicChannels(f func(ctx context.Context, request *ChannelsGetAdminedPublicChannelsRequest) (MessagesChatsClass, error)) {
 func (a *application) channelsGetAdminedPublicChannels(ctx context.Context, request *tg.ChannelsGetAdminedPublicChannelsRequest) (tg.MessagesChatsClass, error) {
-    return &tg.MessagesChats{}, nil
+    return &tg.MessagesChats{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
@@ -2640,7 +3477,14 @@ func (a *application) channelsEditBanned(ctx context.Context, request *tg.Channe
 
 // OnChannelsGetAdminLog(f func(ctx context.Context, request *ChannelsGetAdminLogRequest) (*ChannelsAdminLogResults, error)) {
 func (a *application) channelsGetAdminLog(ctx context.Context, request *tg.ChannelsGetAdminLogRequest) (*tg.ChannelsAdminLogResults, error) {
-    return &tg.ChannelsAdminLogResults{}, nil
+    return &tg.ChannelsAdminLogResults{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
@@ -2676,13 +3520,27 @@ func (a *application) channelsTogglePreHistoryHidde(ctx context.Context, request
 
 // OnChannelsGetLeftChannels(f func(ctx context.Context, offset int) (MessagesChatsClass, error)) {
 func (a *application) channelsGetLeftChannels(ctx context.Context, offset int) (tg.MessagesChatsClass, error) {
-    return &tg.MessagesChats{}, nil
+    return &tg.MessagesChats{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
 // OnChannelsGetGroupsForDiscussion(f func(ctx context.Context) (MessagesChatsClass, error)) {
 func (a *application) channelsGetGroupsForDiscussio(ctx context.Context) (tg.MessagesChatsClass,error){
-    return &tg.MessagesChats{}, nil
+    return &tg.MessagesChats{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
@@ -2718,7 +3576,14 @@ func (a *application) channelsToggleSlowMode(ctx context.Context, request *tg.Ch
 
 // OnChannelsGetInactiveChannels(f func(ctx context.Context) (*MessagesInactiveChats, error)) {
 func (a *application) channelsGetInactiveChannels(ctx context.Context) (*tg.MessagesInactiveChats, error)  {
-    return &tg.MessagesInactiveChats{}, nil
+    return &tg.MessagesInactiveChats{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
@@ -2739,19 +3604,37 @@ func (a *application) channelsViewSponsoredMessage(ctx context.Context, request 
 
 // OnChannelsGetSponsoredMessages(f func(ctx context.Context, channel InputChannelClass) (MessagesSponsoredMessagesClass, error)) {
 func (a *application) channelsGetSponsoredMessages(ctx context.Context, channel tg.InputChannelClass) (tg.MessagesSponsoredMessagesClass, error) {
-    return &tg.MessagesSponsoredMessages{}, nil
+    return &tg.MessagesSponsoredMessages{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
 // OnChannelsGetSendAs(f func(ctx context.Context, peer InputPeerClass) (*ChannelsSendAsPeers, error)) {
 func (a *application) channelsGetSendAs(ctx context.Context, peer tg.InputPeerClass) (*tg.ChannelsSendAsPeers, error) {
-    return &tg.ChannelsSendAsPeers{}, nil
+    return &tg.ChannelsSendAsPeers{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
 // OnChannelsDeleteParticipantHistory(f func(ctx context.Context, request *ChannelsDeleteParticipantHistoryRequest) (*MessagesAffectedHistory, error)) {
 func (a *application) channelsDeleteParticipantHistory(ctx context.Context, request *tg.ChannelsDeleteParticipantHistoryRequest) (*tg.MessagesAffectedHistory, error) {
-    return &tg.MessagesAffectedHistory{}, nil
+    return &tg.MessagesAffectedHistory{
+    	PtsCount: 3334444,
+    	Pts: 444333,
+    	Offset: 343434,
+	}, nil
 }
 
 
@@ -2811,13 +3694,27 @@ func (a *application) channelsCreateForumTopic(ctx context.Context, request *tg.
 
 // OnChannelsGetForumTopics(f func(ctx context.Context, request *ChannelsGetForumTopicsRequest) (*MessagesForumTopics, error)) {
 func (a *application) channelsGetForumTopics(ctx context.Context, request *tg.ChannelsGetForumTopicsRequest) (*tg.MessagesForumTopics, error) {
-    return &tg.MessagesForumTopics{}, nil
+    return &tg.MessagesForumTopics{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
 // OnChannelsGetForumTopicsByID(f func(ctx context.Context, request *ChannelsGetForumTopicsByIDRequest) (*MessagesForumTopics, error)) {
 func (a *application) channelsGetForumTopicsByID(ctx context.Context, request *tg.ChannelsGetForumTopicsByIDRequest) (*tg.MessagesForumTopics, error) {
-    return &tg.MessagesForumTopics{}, nil
+    return &tg.MessagesForumTopics{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+	}, nil
 }
 
 
@@ -2841,7 +3738,11 @@ func (a *application) channelsUpdatePinnedForumTopic(ctx context.Context, reques
 
 // OnChannelsDeleteTopicHistory(f func(ctx context.Context, request *ChannelsDeleteTopicHistoryRequest) (*MessagesAffectedHistory, error)) {
 func (a *application) channelsDeleteTopicHistory(ctx context.Context, request *tg.ChannelsDeleteTopicHistoryRequest) (*tg.MessagesAffectedHistory, error) {
-    return &tg.MessagesAffectedHistory{}, nil
+    return &tg.MessagesAffectedHistory{
+    	Pts: 333444,
+    	PtsCount: 444333,
+    	Offset: 34334,
+	}, nil
 }
 
 
@@ -2925,7 +3826,10 @@ func (a *application) botsSetBotMenuButto(ctx context.Context, request *tg.BotsS
 
 // OnBotsGetBotMenuButton(f func(ctx context.Context, userid InputUserClass) (BotMenuButtonClass, error)) {
 func (a *application) botsGetBotMenuButto(ctx context.Context, userid tg.InputUserClass) (tg.BotMenuButtonClass, error) {
-    return &tg.BotMenuButton{}, nil
+    return &tg.BotMenuButton{
+    	Text: "333444",
+    	URL: "444333",
+	}, nil
 }
 
 
@@ -2949,7 +3853,11 @@ func (a *application) botsSetBotInfo(ctx context.Context, request *tg.BotsSetBot
 
 // OnBotsGetBotInfo(f func(ctx context.Context, request *BotsGetBotInfoRequest) (*BotsBotInfo, error)) {
 func (a *application) botsGetBotInfo(ctx context.Context, request *tg.BotsGetBotInfoRequest) (*tg.BotsBotInfo, error) {
-    return &tg.BotsBotInfo{}, nil
+    return &tg.BotsBotInfo{
+    	Name: "theLostLamb",
+    	About: "333444",
+    	Description: "444333",
+	}, nil
 }
 
 
@@ -2990,31 +3898,60 @@ func (a *application) botsInvokeWebViewCustomMethod(ctx context.Context, request
 
 // OnPaymentsGetPaymentForm(f func(ctx context.Context, request *PaymentsGetPaymentFormRequest) (*PaymentsPaymentForm, error)) {
 func (a *application) paymentsGetPaymentForm(ctx context.Context, request *tg.PaymentsGetPaymentFormRequest) (*tg.PaymentsPaymentForm, error) {
-    return &tg.PaymentsPaymentForm{}, nil
+    return &tg.PaymentsPaymentForm{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnPaymentsGetPaymentReceipt(f func(ctx context.Context, request *PaymentsGetPaymentReceiptRequest) (*PaymentsPaymentReceipt, error)) {
 func (a *application) paymentsGetPaymentReceipt(ctx context.Context, request *tg.PaymentsGetPaymentReceiptRequest) (*tg.PaymentsPaymentReceipt, error) {
-    return &tg.PaymentsPaymentReceipt{}, nil
+    return &tg.PaymentsPaymentReceipt{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnPaymentsValidateRequestedInfo(f func(ctx context.Context, request *PaymentsValidateRequestedInfoRequest) (*PaymentsValidatedRequestedInfo, error)) {
 func (a *application) paymentsValidateRequestedInfo(ctx context.Context, request *tg.PaymentsValidateRequestedInfoRequest) (*tg.PaymentsValidatedRequestedInfo, error) {
-    return &tg.PaymentsValidatedRequestedInfo{}, nil
+    return &tg.PaymentsValidatedRequestedInfo{
+    	ID: "3333444",
+	}, nil
 }
 
 
 // OnPaymentsSendPaymentForm(f func(ctx context.Context, request *PaymentsSendPaymentFormRequest) (PaymentsPaymentResultClass, error)) {
 func (a *application) paymentsSendPaymentForm(ctx context.Context, request *tg.PaymentsSendPaymentFormRequest) (tg.PaymentsPaymentResultClass, error) {
-    return &tg.PaymentsPaymentResult{}, nil
+    return &tg.PaymentsPaymentResult{
+    	Updates: &tg.Updates{
+    		Date: 333444,
+    		Seq: 444333,
+		},
+	}, nil
 }
 
 
 // OnPaymentsGetSavedInfo(f func(ctx context.Context) (*PaymentsSavedInfo, error)) {
 func (a *application) paymentsGetSavedInfo(ctx context.Context) (*tg.PaymentsSavedInfo,error) {
-    return &tg.PaymentsSavedInfo{}, nil
+    return &tg.PaymentsSavedInfo{
+    	SavedInfo: struct {
+			Flags           bin.Fields
+			Name            string
+			Phone           string
+			Email           string
+			ShippingAddress tg.PostAddress
+		}{ Name: "theLostLamb", Phone: "333444", Email: "444333", },
+	}, nil
 }
 
 
@@ -3026,13 +3963,17 @@ func (a *application) paymentsClearSavedInfo(ctx context.Context, request *tg.Pa
 
 // OnPaymentsGetBankCardData(f func(ctx context.Context, number string) (*PaymentsBankCardData, error)) {
 func (a *application) paymentsGetBankCardData(ctx context.Context, number string) (*tg.PaymentsBankCardData, error) {
-    return &tg.PaymentsBankCardData{}, nil
+    return &tg.PaymentsBankCardData{
+    	Title: "333444",
+	}, nil
 }
 
 
 // OnPaymentsExportInvoice(f func(ctx context.Context, invoicemedia InputMediaClass) (*PaymentsExportedInvoice, error)) {
 func (a *application) paymentsExportInvoice(ctx context.Context, invoicemedia tg.InputMediaClass) (*tg.PaymentsExportedInvoice, error) {
-    return &tg.PaymentsExportedInvoice{}, nil
+    return &tg.PaymentsExportedInvoice{
+    	URL: "333444",
+	}, nil
 }
 
 
@@ -3287,9 +4228,28 @@ func (a *application) phoneGetCallConfig(ctx context.Context) (*tg.DataJSON,erro
 // OnPhoneRequestCall(f func(ctx context.Context, request *PhoneRequestCallRequest) (*PhonePhoneCall, error)) {
 func (a *application) phoneRequestCall(ctx context.Context, request *tg.PhoneRequestCallRequest) (*tg.PhonePhoneCall, error) {
     return &tg.PhonePhoneCall{
-
+    	PhoneCall: &tg.PhoneCallAccepted{
+    		Video: true,
+    		ID: 333444,
+    		AccessHash: 444333,
+    		Date: 34334,
+    		AdminID: 333,
+    		ParticipantID: 444,
+    		GB: []byte{'4'},
+    		Protocol: struct {
+				Flags           bin.Fields
+				UDPP2P          bool
+				UDPReflector    bool
+				MinLayer        int
+				MaxLayer        int
+				LibraryVersions []string
+			}{UDPP2P:true , UDPReflector: true, MinLayer: 33, MaxLayer: 44, LibraryVersions: []string{"333444"}},
+		},
 		Users: []tg.UserClass{
-
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
 		},
 
 	}, nil
@@ -3298,13 +4258,63 @@ func (a *application) phoneRequestCall(ctx context.Context, request *tg.PhoneReq
 
 // OnPhoneAcceptCall(f func(ctx context.Context, request *PhoneAcceptCallRequest) (*PhonePhoneCall, error)) {
 func (a *application) phoneAcceptCall(ctx context.Context, request *tg.PhoneAcceptCallRequest) (*tg.PhonePhoneCall, error) {
-    return &tg.PhonePhoneCall{}, nil
+	return &tg.PhonePhoneCall{
+		PhoneCall: &tg.PhoneCallAccepted{
+			Video: true,
+			ID: 333444,
+			AccessHash: 444333,
+			Date: 34334,
+			AdminID: 333,
+			ParticipantID: 444,
+			GB: []byte{'4'},
+			Protocol: struct {
+				Flags           bin.Fields
+				UDPP2P          bool
+				UDPReflector    bool
+				MinLayer        int
+				MaxLayer        int
+				LibraryVersions []string
+			}{UDPP2P:true , UDPReflector: true, MinLayer: 33, MaxLayer: 44, LibraryVersions: []string{"333444"}},
+		},
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+
+	}, nil
 }
 
 
 // OnPhoneConfirmCall(f func(ctx context.Context, request *PhoneConfirmCallRequest) (*PhonePhoneCall, error)) {
 func (a *application) phoneConfirmCall(ctx context.Context, request *tg.PhoneConfirmCallRequest) (*tg.PhonePhoneCall, error) {
-    return &tg.PhonePhoneCall{}, nil
+	return &tg.PhonePhoneCall{
+		PhoneCall: &tg.PhoneCallAccepted{
+			Video: true,
+			ID: 333444,
+			AccessHash: 444333,
+			Date: 34334,
+			AdminID: 333,
+			ParticipantID: 444,
+			GB: []byte{'4'},
+			Protocol: struct {
+				Flags           bin.Fields
+				UDPP2P          bool
+				UDPReflector    bool
+				MinLayer        int
+				MaxLayer        int
+				LibraryVersions []string
+			}{UDPP2P:true , UDPReflector: true, MinLayer: 33, MaxLayer: 44, LibraryVersions: []string{"333444"}},
+		},
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+
+	}, nil
 }
 
 
@@ -3400,19 +4410,24 @@ func (a *application) phoneToggleGroupCallSettings(ctx context.Context, request 
 
 // OnPhoneGetGroupCall(f func(ctx context.Context, request *PhoneGetGroupCallRequest) (*PhoneGroupCall, error)) {
 func (a *application) phoneGetGroupCall(ctx context.Context, request *tg.PhoneGetGroupCallRequest) (*tg.PhoneGroupCall, error) {
-    return &tg.PhoneGroupCall{}, nil
+    return &tg.PhoneGroupCall{
+    	ParticipantsNextOffset: "333444",
+	}, nil
 }
 
 
 // OnPhoneGetGroupParticipants(f func(ctx context.Context, request *PhoneGetGroupParticipantsRequest) (*PhoneGroupParticipants, error)) {
 func (a *application) phoneGetGroupParticipants(ctx context.Context, request *tg.PhoneGetGroupParticipantsRequest) (*tg.PhoneGroupParticipants, error) {
-    return &tg.PhoneGroupParticipants{}, nil
+    return &tg.PhoneGroupParticipants{
+    	Count: 3344,
+    	NextOffset: "444333",
+	}, nil
 }
 
 
 // OnPhoneCheckGroupCall(f func(ctx context.Context, request *PhoneCheckGroupCallRequest) ([]int, error)) {
 func (a *application) phoneCheckGroupCall(ctx context.Context, request *tg.PhoneCheckGroupCallRequest) ([]int, error) {
-    return []int{},nil
+	return []int{333444}, nil
 }
 
 
@@ -3445,13 +4460,22 @@ func (a *application) phoneEditGroupCallTitle(ctx context.Context, request *tg.P
 
 // OnPhoneGetGroupCallJoinAs(f func(ctx context.Context, peer InputPeerClass) (*PhoneJoinAsPeers, error)) {
 func (a *application) phoneGetGroupCallJoinAs(ctx context.Context, peer tg.InputPeerClass) (*tg.PhoneJoinAsPeers, error) {
-    return &tg.PhoneJoinAsPeers{},nil
+    return &tg.PhoneJoinAsPeers{
+    	Users: []tg.UserClass{
+    		&tg.User{
+    			Username: "333444",
+    			Phone: "444333",
+			},
+		},
+	},nil
 }
 
 
 // OnPhoneExportGroupCallInvite(f func(ctx context.Context, request *PhoneExportGroupCallInviteRequest) (*PhoneExportedGroupCallInvite, error)) {
 func (a *application) phoneExportGroupCallInvite(ctx context.Context, request *tg.PhoneExportGroupCallInviteRequest) (*tg.PhoneExportedGroupCallInvite, error) {
-    return &tg.PhoneExportedGroupCallInvite{}, nil
+    return &tg.PhoneExportedGroupCallInvite{
+    	Link: "333444",
+	}, nil
 }
 
 
@@ -3499,13 +4523,24 @@ func (a *application) phoneLeaveGroupCallPresentatio(ctx context.Context, call t
 
 // OnPhoneGetGroupCallStreamChannels(f func(ctx context.Context, call InputGroupCall) (*PhoneGroupCallStreamChannels, error)) {
 func (a *application) phoneGetGroupCallStreamChannels(ctx context.Context, call tg.InputGroupCall) (*tg.PhoneGroupCallStreamChannels, error) {
-    return &tg.PhoneGroupCallStreamChannels{}, nil
+    return &tg.PhoneGroupCallStreamChannels{
+    	Channels: []tg.GroupCallStreamChannel{
+    		{
+    			Channel: 333444,
+    			Scale: 444333,
+    			LastTimestampMs: 343434,
+			},
+		},
+	}, nil
 }
 
 
 // OnPhoneGetGroupCallStreamRtmpURL(f func(ctx context.Context, request *PhoneGetGroupCallStreamRtmpURLRequest) (*PhoneGroupCallStreamRtmpURL, error)) {
 func (a *application) phoneGetGroupCallStreamRtmpURL(ctx context.Context, request *tg.PhoneGetGroupCallStreamRtmpURLRequest) (*tg.PhoneGroupCallStreamRtmpURL, error) {
-    return &tg.PhoneGroupCallStreamRtmpURL{}, nil
+    return &tg.PhoneGroupCallStreamRtmpURL{
+    	URL: "333444",
+    	Key: "444333",
+	}, nil
 }
 
 
@@ -3527,8 +4562,12 @@ func (a *application) langpackGetLangPack(ctx context.Context, request *tg.Langp
 
 // OnLangpackGetStrings(f func(ctx context.Context, request *LangpackGetStringsRequest) ([]LangPackStringClass, error)) {
 func (a *application) langpackGetStrings(ctx context.Context, request *tg.LangpackGetStringsRequest) ([]tg.LangPackStringClass, error) {
-    //return &[]tg.LangPackString{}, nil
-	return nil,nil
+	return []tg.LangPackStringClass{
+		&tg.LangPackString{
+			Key: "333444",
+			Value: "444333",
+		},
+	},nil
 }
 
 
@@ -3579,37 +4618,65 @@ func (a *application) foldersEditPeerFolders(ctx context.Context, folderpeers []
 
 // OnStatsGetBroadcastStats(f func(ctx context.Context, request *StatsGetBroadcastStatsRequest) (*StatsBroadcastStats, error)) {
 func (a *application) statsGetBroadcastStats(ctx context.Context, request *tg.StatsGetBroadcastStatsRequest) (*tg.StatsBroadcastStats, error) {
-    return &tg.StatsBroadcastStats{}, nil
+    return &tg.StatsBroadcastStats{
+    	EnabledNotifications: struct {
+			Part  float64
+			Total float64
+		}{Part: 333.444, Total: 444.333},
+	}, nil
 }
 
 
 // OnStatsLoadAsyncGraph(f func(ctx context.Context, request *StatsLoadAsyncGraphRequest) (StatsGraphClass, error)) {
 func (a *application) statsLoadAsyncGraph(ctx context.Context, request *tg.StatsLoadAsyncGraphRequest) (tg.StatsGraphClass, error) {
-    return &tg.StatsGraph{}, nil
+    return &tg.StatsGraph{
+    	ZoomToken: "333444",
+	}, nil
 }
 
 
 // OnStatsGetMegagroupStats(f func(ctx context.Context, request *StatsGetMegagroupStatsRequest) (*StatsMegagroupStats, error)) {
 func (a *application) statsGetMegagroupStats(ctx context.Context, request *tg.StatsGetMegagroupStatsRequest) (*tg.StatsMegagroupStats, error) {
-    return &tg.StatsMegagroupStats{}, nil
+    return &tg.StatsMegagroupStats{
+    	Messages: struct {
+			Current  float64
+			Previous float64
+		}{Current: 333.444, Previous: 444.333},
+	}, nil
 }
 
 
 // OnStatsGetMessagePublicForwards(f func(ctx context.Context, request *StatsGetMessagePublicForwardsRequest) (MessagesMessagesClass, error)) {
 func (a *application) statsGetMessagePublicForwards(ctx context.Context, request *tg.StatsGetMessagePublicForwardsRequest) (tg.MessagesMessagesClass, error) {
-    return &tg.MessagesMessages{}, nil
+    return &tg.MessagesMessages{
+    	Users: []tg.UserClass{
+    		&tg.User{
+    			Username: "333444",
+    			Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnStatsGetMessageStats(f func(ctx context.Context, request *StatsGetMessageStatsRequest) (*StatsMessageStats, error)) {
 func (a *application) statsGetMessageStats(ctx context.Context, request *tg.StatsGetMessageStatsRequest) (*tg.StatsMessageStats, error) {
-    return &tg.StatsMessageStats{}, nil
+    return &tg.StatsMessageStats{
+    	ViewsGraph: &tg.StatsGraph{
+    		ZoomToken: "333444",
+		},
+	}, nil
 }
 
 
 // OnChatlistsExportChatlistInvite(f func(ctx context.Context, request *ChatlistsExportChatlistInviteRequest) (*ChatlistsExportedChatlistInvite, error)) {
 func (a *application) chatlistsExportChatlistInvite(ctx context.Context, request *tg.ChatlistsExportChatlistInviteRequest) (*tg.ChatlistsExportedChatlistInvite, error) {
-    return &tg.ChatlistsExportedChatlistInvite{}, nil
+    return &tg.ChatlistsExportedChatlistInvite{
+    	Invite: tg.ExportedChatlistInvite{
+    		Title: "333444",
+    		URL: "444333",
+		},
+	}, nil
 }
 
 
@@ -3621,19 +4688,32 @@ func (a *application) chatlistsDeleteExportedInvite(ctx context.Context, request
 
 // OnChatlistsEditExportedInvite(f func(ctx context.Context, request *ChatlistsEditExportedInviteRequest) (*ExportedChatlistInvite, error)) {
 func (a *application) chatlistsEditExportedInvite(ctx context.Context, request *tg.ChatlistsEditExportedInviteRequest) (*tg.ExportedChatlistInvite, error) {
-    return &tg.ExportedChatlistInvite{}, nil
+    return &tg.ExportedChatlistInvite{
+		Title: "333444",
+		URL: "444333",
+	}, nil
 }
 
 
 // OnChatlistsGetExportedInvites(f func(ctx context.Context, chatlist InputChatlistDialogFilter) (*ChatlistsExportedInvites, error)) {
 func (a *application) chatlistsGetExportedInvites(ctx context.Context, chatlist tg.InputChatlistDialogFilter) (*tg.ChatlistsExportedInvites, error) {
-    return &tg.ChatlistsExportedInvites{}, nil
+    return &tg.ChatlistsExportedInvites{
+    	Invites: []tg.ExportedChatlistInvite{
+    		{
+    			Title: "333444",
+    			URL: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnChatlistsCheckChatlistInvite(f func(ctx context.Context, slug string) (ChatlistsChatlistInviteClass, error)) {
 func (a *application) chatlistsCheckChatlistInvite(ctx context.Context, slug string) (tg.ChatlistsChatlistInviteClass, error) {
-    return &tg.ChatlistsChatlistInvite{}, nil
+    return &tg.ChatlistsChatlistInvite{
+    	Title: "333444",
+    	Emoticon: "444333",
+	}, nil
 }
 
 
@@ -3648,7 +4728,14 @@ func (a *application) chatlistsJoinChatlistInvite(ctx context.Context, request *
 
 // OnChatlistsGetChatlistUpdates(f func(ctx context.Context, chatlist InputChatlistDialogFilter) (*ChatlistsChatlistUpdates, error)) {
 func (a *application) chatlistsGetChatlistUpdates(ctx context.Context, chatlist tg.InputChatlistDialogFilter) (*tg.ChatlistsChatlistUpdates, error) {
-    return &tg.ChatlistsChatlistUpdates{}, nil
+    return &tg.ChatlistsChatlistUpdates{
+    	Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -3669,7 +4756,6 @@ func (a *application) chatlistsHideChatlistUpdates(ctx context.Context, chatlist
 
 // OnChatlistsGetLeaveChatlistSuggestions(f func(ctx context.Context, chatlist InputChatlistDialogFilter) ([]PeerClass, error)) {
 func (a *application) chatlistsGetLeaveChatlistSuggestions(ctx context.Context, chatlist tg.InputChatlistDialogFilter) ([]tg.PeerClass, error) {
-    //return &tg.Peer{}, nil
 	return nil, nil
 }
 
@@ -3709,19 +4795,26 @@ func (a *application) storiesEditStory(ctx context.Context, request *tg.StoriesE
 
 // OnStoriesDeleteStories(f func(ctx context.Context, request *StoriesDeleteStoriesRequest) ([]int, error)) {
 func (a *application) storiesDeleteStories(ctx context.Context, request *tg.StoriesDeleteStoriesRequest) ([]int, error) {
-    return []int{}, nil
+	return []int{333444}, nil
 }
 
 
 // OnStoriesTogglePinned(f func(ctx context.Context, request *StoriesTogglePinnedRequest) ([]int, error)) {
 func (a *application) storiesTogglePinned(ctx context.Context, request *tg.StoriesTogglePinnedRequest) ([]int, error) {
-    return []int{}, nil
+	return []int{333444}, nil
 }
 
 
 // OnStoriesGetAllStories(f func(ctx context.Context, request *StoriesGetAllStoriesRequest) (StoriesAllStoriesClass, error)) {
 func (a *application) storiesGetAllStories(ctx context.Context, request *tg.StoriesGetAllStoriesRequest) (tg.StoriesAllStoriesClass, error) {
-    return &tg.StoriesAllStories{}, nil
+    return &tg.StoriesAllStories{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -3757,7 +4850,7 @@ func (a *application) storiesToggleAllStoriesHidde(ctx context.Context, hidden b
 
 // OnStoriesReadStories(f func(ctx context.Context, request *StoriesReadStoriesRequest) ([]int, error)) {
 func (a *application) storiesReadStories(ctx context.Context, request *tg.StoriesReadStoriesRequest) ([]int, error) {
-    return []int{}, nil
+	return []int{333444}, nil
 }
 
 
@@ -3769,19 +4862,31 @@ func (a *application) storiesIncrementStoryViews(ctx context.Context, request *t
 
 // OnStoriesGetStoryViewsList(f func(ctx context.Context, request *StoriesGetStoryViewsListRequest) (*StoriesStoryViewsList, error)) {
 func (a *application) storiesGetStoryViewsList(ctx context.Context, request *tg.StoriesGetStoryViewsListRequest) (*tg.StoriesStoryViewsList, error) {
-    return &tg.StoriesStoryViewsList{}, nil
+    return &tg.StoriesStoryViewsList{
+    	Count: 333444,
+    	NextOffset: "333444",
+	}, nil
 }
 
 
 // OnStoriesGetStoriesViews(f func(ctx context.Context, request *StoriesGetStoriesViewsRequest) (*StoriesStoryViews, error)) {
 func (a *application) storiesGetStoriesViews(ctx context.Context, request *tg.StoriesGetStoriesViewsRequest) (*tg.StoriesStoryViews, error) {
-    return &tg.StoriesStoryViews{}, nil
+    return &tg.StoriesStoryViews{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnStoriesExportStoryLink(f func(ctx context.Context, request *StoriesExportStoryLinkRequest) (*ExportedStoryLink, error)) {
 func (a *application) storiesExportStoryLink(ctx context.Context, request *tg.StoriesExportStoryLinkRequest) (*tg.ExportedStoryLink, error) {
-    return &tg.ExportedStoryLink{}, nil
+    return &tg.ExportedStoryLink{
+    	Link: "333444",
+	}, nil
 }
 
 
@@ -3811,7 +4916,14 @@ func (a *application) storiesSendReactio(ctx context.Context, request *tg.Storie
 
 // OnStoriesGetPeerStories(f func(ctx context.Context, peer InputPeerClass) (*StoriesPeerStories, error)) {
 func (a *application) storiesGetPeerStories(ctx context.Context, peer tg.InputPeerClass) (*tg.StoriesPeerStories, error) {
-    return &tg.StoriesPeerStories{}, nil
+    return &tg.StoriesPeerStories{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
@@ -3826,14 +4938,19 @@ func (a *application) storiesGetAllReadPeerStories(ctx context.Context) (tg.Upda
 
 // OnStoriesGetPeerMaxIDs(f func(ctx context.Context, id []InputPeerClass) ([]int, error)) {
 func (a *application) storiesGetPeerMaxIDs(ctx context.Context, id []tg.InputPeerClass) ([]int, error) {
-    return []int{}, nil
+	return []int{333444}, nil
 }
 
 
 // OnStoriesGetChatsToSend(f func(ctx context.Context) (MessagesChatsClass, error)) {
 func (a *application) storiesGetChatsToSend(ctx context.Context) (tg.MessagesChatsClass, error) {
-    return &tg.MessagesChats{
-
+	return &tg.MessagesChats{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
 	}, nil
 }
 
@@ -3846,20 +4963,38 @@ func (a *application) storiesTogglePeerStoriesHidde(ctx context.Context, request
 
 // OnStoriesGetBoostsStatus(f func(ctx context.Context, peer InputPeerClass) (*StoriesBoostsStatus, error)) {
 func (a *application) storiesGetBoostsStatus(ctx context.Context, peer tg.InputPeerClass) (*tg.StoriesBoostsStatus, error) {
-    return &tg.StoriesBoostsStatus{}, nil
+    return &tg.StoriesBoostsStatus{
+    	MyBoost: true,
+    	Level: 333444,
+    	BoostURL: "333444",
+	}, nil
 }
 
 
 // OnStoriesGetBoostersList(f func(ctx context.Context, request *StoriesGetBoostersListRequest) (*StoriesBoostersList, error)) {
 func (a *application) storiesGetBoostersList(ctx context.Context, request *tg.StoriesGetBoostersListRequest) (*tg.StoriesBoostersList, error) {
-    return &tg.StoriesBoostersList{}, nil
+    return &tg.StoriesBoostersList{
+		Users: []tg.UserClass{
+			&tg.User{
+				Username: "333444",
+				Phone: "444333",
+			},
+		},
+	}, nil
 }
 
 
 // OnStoriesCanApplyBoost(f func(ctx context.Context, peer InputPeerClass) (StoriesCanApplyBoostResultClass, error)) {
 func (a *application) storiesCanApplyBoost(ctx context.Context, peer tg.InputPeerClass) (tg.StoriesCanApplyBoostResultClass, error) {
-   //return tg.StoriesCanApplyBoostResultBox{}, nil
-	return &tg.StoriesCanApplyBoostOk{},nil
+	return &tg.StoriesCanApplyBoostReplace{
+		Chats: []tg.ChatClass{
+			&tg.Chat{
+				ID: 333444,
+				Title: "333444",
+			},
+		},
+
+	},nil
 }
 
 
@@ -3871,13 +5006,18 @@ func (a *application) storiesApplyBoost(ctx context.Context, peer tg.InputPeerCl
 
 // OnTestUseError(f func(ctx context.Context) (*Error, error)) {
 func (a *application) testUseError(ctx context.Context) (*tg.Error,error) {
-    return &tg.Error{}, nil
+    return &tg.Error{
+    	Text: "333444",
+	}, nil
 }
 
 
 // OnTestUseConfigSimple(f func(ctx context.Context) (*HelpConfigSimple, error)) {
 func (a *application) testUseConfigSimple(ctx context.Context) (*tg.HelpConfigSimple, error){
-    return &tg.HelpConfigSimple{}, nil
+    return &tg.HelpConfigSimple{
+    	Date: 333444,
+    	Expires: 444333,
+	}, nil
 }
 
 
